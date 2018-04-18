@@ -2,17 +2,17 @@ package org.turkudragons.SymphonyDuel;
 
 public class Spell {
 	private int power;
-	private int range;
 	private int count;
 	private boolean aoe;
 	private Type type;
+	private Element element;
 	
-	public Spell(int power, int range, int count, boolean aoe, Type type) {
+	public Spell(int power, int count, boolean aoe, Type type, Element element) {
 		this.power = power;
-		this.range = range;
 		this.count = count;
 		this.aoe = aoe;
 		this.type = type;
+		this.element = element;
 	}
 	
 	public void cast() {
@@ -25,14 +25,6 @@ public class Spell {
 
 	public void setPower(int power) {
 		this.power = power;
-	}
-
-	public int getRange() {
-		return range;
-	}
-
-	public void setRange(int range) {
-		this.range = range;
 	}
 
 	public int getCount() {
@@ -57,5 +49,13 @@ public class Spell {
 
 	public void setType(Type type) {
 		this.type = type;
+	}
+
+	public Element getElement() {
+		return element;
+	}
+
+	public void setElement(Element element) {
+		this.element = element;
 	}
 }
