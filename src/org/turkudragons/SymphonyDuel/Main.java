@@ -1,16 +1,11 @@
 package org.turkudragons.SymphonyDuel;
 
-import java.util.ArrayList;
-
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class Main extends StateBasedGame {
-	
-	ArrayList<Player> players = new ArrayList<Player>();
-	static boolean turnTimeout;
 	
 	public Main(String name) {
 		super(name);
@@ -24,6 +19,7 @@ public class Main extends StateBasedGame {
 			appgc = new AppGameContainer(new Main("Symphony Duel"));
 			appgc.setDisplayMode(800, 600, false);
 			appgc.setAlwaysRender(true);
+			appgc.setTargetFrameRate(60);
 			appgc.start();
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
@@ -34,7 +30,7 @@ public class Main extends StateBasedGame {
 	@Override
 	public void initStatesList(GameContainer gc) throws SlickException {
 		addState(new Menu()); //id = 0
-		
+		addState(new LocalPvP()); //id = 1
 		this.getState(0).init(gc, this);
 	}
 
