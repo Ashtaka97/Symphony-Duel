@@ -17,5 +17,5 @@ public class Player {
 	public void update() {
 		
 	}
-	
+
 }
