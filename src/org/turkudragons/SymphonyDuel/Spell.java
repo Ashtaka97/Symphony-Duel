@@ -1,11 +1,11 @@
 package org.turkudragons.SymphonyDuel;
 
-public class Spell {
-	private int power;
-	private int count;
-	private boolean aoe;
-	private Type type;
-	private Element element;
+public abstract class Spell {
+	protected int power;
+	protected int count;
+	protected boolean aoe;
+	protected Type type;
+	protected Element element;
 	
 	public Spell(int power, int count, boolean aoe, Type type, Element element) {
 		this.power = power;

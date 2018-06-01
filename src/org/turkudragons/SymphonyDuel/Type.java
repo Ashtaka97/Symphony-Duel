@@ -1,9 +1,9 @@
 package org.turkudragons.SymphonyDuel;
 
 public enum Type {
-	ATTACK, DEFENSE, BUFF, DEBUFF
+	ATTACK, DEFENSE, BUFFDEBUFF, SUMMON
 }
 
 enum Element {
-	FLAME, FROST, AIR, EARTH
+	HEAT, COLD, AIR, EARTH
 }
