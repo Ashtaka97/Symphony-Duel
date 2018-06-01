@@ -10,20 +10,16 @@ public abstract class Spell {
 	protected Shape area;
 	protected Type type;
 	protected Element element;
-	protected float defx;
-	protected float defy;
 	protected float speed;
 	protected String chant;
 	
-	public Spell(int power, int count, boolean collidable, boolean aoe, Shape area, Type type, Element element, float defx, float defy, float speed, String chant) {
+	public Spell(int power, int count, boolean collidable, boolean aoe, Shape area, Type type, Element element, float speed, String chant) {
 		this.power = power;
 		this.count = count;
 		this.aoe = aoe;
 		this.area = area;
 		this.type = type;
 		this.element = element;
-		this.defx = defx;
-		this.defy = defy;
 		this.speed = speed;
 		this.chant = chant;
 		this.collidable = collidable;
