@@ -17,7 +17,7 @@ public class Main extends StateBasedGame {
 		
 		try {
 			appgc = new AppGameContainer(new Main("Symphony Duel"));
-			appgc.setDisplayMode(800, 600, false);
+			appgc.setDisplayMode(1200, 600, false);
 			appgc.setAlwaysRender(true);
 			appgc.setTargetFrameRate(60);
 			appgc.start();
@@ -29,9 +29,10 @@ public class Main extends StateBasedGame {
 
 	@Override
 	public void initStatesList(GameContainer gc) throws SlickException {
-		addState(new Menu()); //id = 0
+		//addState(new Menu()); //id = 0
 		addState(new LocalPvP()); //id = 1
-		this.getState(0).init(gc, this);
+		this.getState(1).init(gc, this);
+		//this.getState(1).init(gc, this);
 	}
 
 }
