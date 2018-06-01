@@ -62,8 +62,8 @@ public class LocalPvP extends BasicGameState implements GameState {
 		input = gc.getInput();
 		chantP1 = "";
 		chantP2 = "";
-		p1 = new Player();
-		p2 = new Player();
+		p1 = new Player(200, 200);
+		p2 = new Player(1000, 200);
 		oList = new ArrayList<Object>();
 		oList.add(p1);
 		oList.add(p2);

@@ -32,6 +32,7 @@ public class Main extends StateBasedGame {
 		addState(new Menu()); //id = 0
 		addState(new LocalPvP()); //id = 1
 		this.getState(0).init(gc, this);
+		this.getState(1).init(gc, this);
 	}
 
 }
