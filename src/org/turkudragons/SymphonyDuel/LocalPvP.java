@@ -47,18 +47,17 @@ public class LocalPvP extends BasicGameState implements GameState {
 	 * inputEnded, inputStarted, isAcceptingInput, setInput
 	 */
 
-	private int turnNumber;
+	private int timer;
 	private Input input;
 	private Player p1;
 	private Player p2;
 	private String chantP1;
 	private String chantP2;
-	private ArrayList<Object> oList;
+	ArrayList<Object> oList;
 	private ArrayList<Shape> timerList;
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
-		turnNumber = 1;
 		input = gc.getInput();
 		chantP1 = "";
 		chantP2 = "";
@@ -72,12 +71,14 @@ public class LocalPvP extends BasicGameState implements GameState {
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-		g.drawString(turnNumber + "", 0, 0);
+		g.drawString(timer+"", 500, 1000);
 	}
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
 
+		
+		
 		// Player 1 chanting
 		if (input.isKeyPressed(Input.KEY_W)) {
 			if(timerList.get(0).intersects(timerList.get(1))) chantP1 += "W";
