@@ -3,10 +3,13 @@
  */
 package org.turkudragons.SymphonyDuel;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -44,27 +47,27 @@ public class LocalPvP extends BasicGameState implements GameState {
 	 * inputEnded, inputStarted, isAcceptingInput, setInput
 	 */
 
-	private boolean chanting;
-	private boolean casting;
 	private int turnNumber;
-	private int turnTimer;
 	private Input input;
 	private Player p1;
 	private Player p2;
 	private String chantP1;
 	private String chantP2;
+	private ArrayList<Object> oList;
+	private ArrayList<Shape> timerList;
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		turnNumber = 1;
-		turnTimer = 0;
-		chanting = false;
-		casting = false;
 		input = gc.getInput();
 		chantP1 = "";
 		chantP2 = "";
 		p1 = new Player();
 		p2 = new Player();
+		oList = new ArrayList<Object>();
+		oList.add(p1);
+		oList.add(p2);
+		timerList = new ArrayList<Shape>();
 	}
 
 	@Override
@@ -74,60 +77,54 @@ public class LocalPvP extends BasicGameState implements GameState {
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
-		if (chanting) {
 
-			turnTimer += delta;
-			if (turnTimer >= 60000) {
-				chanting = false;
-				casting = true;
-			}
+		// Player 1 chanting
+		if (input.isKeyPressed(Input.KEY_W)) {
+			if(timerList.get(0).intersects(timerList.get(1))) chantP1 += "W";
+			else chantP1 = "";
+		}
+		else if (input.isKeyPressed(Input.KEY_S)) {
+			if(timerList.get(0).intersects(timerList.get(1))) chantP1 += "S";
+			else chantP1 = "";
+		}
+		else if (input.isKeyPressed(Input.KEY_A)) {
+			if(timerList.get(0).intersects(timerList.get(1))) chantP1 += "A";
+			else chantP1 = "";
+		}
+		else if (input.isKeyPressed(Input.KEY_D)) {
+			if(timerList.get(0).intersects(timerList.get(1))) chantP1 += "D";
+			else chantP1 = "";
+		}
+		else if (input.isKeyPressed(Input.KEY_SPACE)) {
+			checkSpell(chantP1);
+			chantP1 = "";
+		}
 
-			// Player 1 chanting
-			if (!p1.failed) {
-				if (input.isKeyPressed(Input.KEY_W)) {
-
-				} else if (input.isKeyPressed(Input.KEY_S)) {
-
-				} else if (input.isKeyPressed(Input.KEY_A)) {
-
-				} else if (input.isKeyPressed(Input.KEY_D)) {
-
-				} else if (input.isKeyPressed(Input.KEY_SPACE)) {
-					p1.spellsThisTurn.add(checkSpell(chantP1));
-					if (p1.spellsThisTurn.get(p1.spellsThisTurn.size() - 1) == null) {
-						p1.failed = true;
-					}
-				}
-			}
-
-			// Player 2 chanting
-			if (!p2.failed) {
-				if (input.isKeyPressed(Input.KEY_UP)) {
-
-				} else if (input.isKeyPressed(Input.KEY_DOWN)) {
-
-				} else if (input.isKeyPressed(Input.KEY_LEFT)) {
-
-				} else if (input.isKeyPressed(Input.KEY_RIGHT)) {
-
-				} else if (input.isKeyPressed(Input.KEY_ENTER)) {
-					p2.spellsThisTurn.add(checkSpell(chantP2));
-					if (p2.spellsThisTurn.get(p2.spellsThisTurn.size() - 1) == null) {
-						p2.failed = true;
-					}
-				}
-			}
-		} else if (casting) {
-			p1.castSpellsThisTurn();
-			p2.castSpellsThisTurn();
-			casting = false;
-		} else {
-			chanting = true;
+		// Player 2 chanting
+		if (input.isKeyPressed(Input.KEY_UP)) {
+			if(timerList.get(0).intersects(timerList.get(1))) chantP2 += "W";
+			else chantP2 = "";
+		}
+		else if (input.isKeyPressed(Input.KEY_DOWN)) {
+			if(timerList.get(0).intersects(timerList.get(1))) chantP2 += "S";
+			else chantP2 = "";
+		}
+		else if (input.isKeyPressed(Input.KEY_LEFT)) {
+			if(timerList.get(0).intersects(timerList.get(1))) chantP2 += "A";
+			else chantP2 = "";
+		}
+		else if (input.isKeyPressed(Input.KEY_RIGHT)) {
+			if(timerList.get(0).intersects(timerList.get(1))) chantP2 += "D";
+			else chantP2 = "";
+		}
+		else if (input.isKeyPressed(Input.KEY_ENTER)) {
+			checkSpell(chantP2);
+			chantP2 = "";
 		}
 	}
 
-	private Spell checkSpell(String s) {
-		return null;
+	private void checkSpell(String s) {
+		
 	}
 
 	@Override
