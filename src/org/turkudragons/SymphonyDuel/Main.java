@@ -31,8 +31,8 @@ public class Main extends StateBasedGame {
 	public void initStatesList(GameContainer gc) throws SlickException {
 		//addState(new Menu()); //id = 0
 		addState(new LocalPvP()); //id = 1
+		//this.getState(0).init(gc, this);
 		this.getState(1).init(gc, this);
-		//this.getState(1).init(gc, this);
 	}
 
 }

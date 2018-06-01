@@ -9,6 +9,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.GameState;
@@ -48,16 +49,19 @@ public class LocalPvP extends BasicGameState implements GameState {
 	 */
 
 	private int timer;
+	int tapInterval;
 	private Input input;
 	private Player p1;
 	private Player p2;
 	private String chantP1;
 	private String chantP2;
-	ArrayList<Object> oList;
+	static ArrayList<Object> oList;
 	private ArrayList<Shape> timerList;
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
+		timer = 0;
+		tapInterval = 500;
 		input = gc.getInput();
 		chantP1 = "";
 		chantP2 = "";
@@ -67,16 +71,29 @@ public class LocalPvP extends BasicGameState implements GameState {
 		oList.add(p1);
 		oList.add(p2);
 		timerList = new ArrayList<Shape>();
+		timerList.add(new Rectangle(200, 100, 10, 20));
 	}
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-		g.drawString(timer+"", 500, 1000);
+		g.drawString(timer+"", 550, 100);
+		for(Object o : oList) {
+			
+		}
+		for(Shape s : timerList) {
+			g.draw(s);
+		}
 	}
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
 
+		if(timer >= tapInterval) {
+			timerList.add(new Rectangle(3, 20, 0, 0));
+			timer = 0;
+		}
+		else timer += 1+delta;
+		
 		
 		
 		// Player 1 chanting
