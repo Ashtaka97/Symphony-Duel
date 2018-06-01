@@ -1,5 +1,4 @@
 package org.turkudragons.SymphonyDuel;
-
 import org.newdawn.slick.geom.Shape;
 
 public class Fireball_Spell extends Spell {

@@ -5,5 +5,5 @@ public enum Type {
 }
 
 enum Element {
-	HEAT, COLD, AIR, EARTH
+	HEAT, COLD, AIR, EARTH, RADIANT
 }
