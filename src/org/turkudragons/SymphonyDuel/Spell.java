@@ -12,8 +12,9 @@ public abstract class Spell {
 	protected Element element;
 	protected float speed;
 	protected String chant;
+	protected String name;
 	
-	public Spell(int power, int count, boolean collidable, boolean aoe, Shape area, Type type, Element element, float speed, String chant) {
+	public Spell(int power, int count, boolean collidable, boolean aoe, Shape area, Type type, Element element, float speed, String chant, String name) {
 		this.power = power;
 		this.count = count;
 		this.aoe = aoe;
@@ -23,10 +24,10 @@ public abstract class Spell {
 		this.speed = speed;
 		this.chant = chant;
 		this.collidable = collidable;
-		
+		this.name = name;
 	}
 	
-	public void cast() {
+	public void cast(Player caster, Player opponent) {
 		
 	}
 
@@ -68,5 +69,13 @@ public abstract class Spell {
 
 	public void setElement(Element element) {
 		this.element = element;
+	}
+	
+	public String getChant() {
+		return chant;
+	}
+
+	public String getName() {
+		return name;
 	}
 }

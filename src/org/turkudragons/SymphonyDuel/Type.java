@@ -7,3 +7,7 @@ public enum Type {
 enum Element {
 	HEAT, COLD, AIR, EARTH, RADIANT
 }
+
+enum Target {
+	SELF, ENEMY, HOSTILE, FRIENDLY
+}

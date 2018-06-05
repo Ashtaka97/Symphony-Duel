@@ -3,7 +3,9 @@
  */
 package org.turkudragons.SymphonyDuel;
 
+import java.awt.List;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -63,9 +65,17 @@ public class LocalPvP extends BasicGameState implements GameState {
 	static ArrayList<Player> oList;
 	private ArrayList<Shape> timerList;
 	private ArrayList<Shape> timerList2;
+	private ArrayList<Spell> spells;
+	private String p1LastSpell;
+	private String p2LastSpell;
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
+		spells = new ArrayList<Spell>();
+		spells.add(new Fireball_Spell());
+		spells.add(new GiftOfLife_Spell());
+		p1LastSpell = "";
+		p2LastSpell = "";
 		timer = 0;
 		tapInterval = 750;
 		timer2 = 0;
@@ -98,6 +108,8 @@ public class LocalPvP extends BasicGameState implements GameState {
 		}
 		g.drawString(chantP1, 200, 450);
 		g.drawString(chantP2, 1000, 450);
+		g.drawString(p1LastSpell, 200, 445);
+		g.drawString(p2LastSpell, 1000, 445);
 		for(Shape s : timerList) {
 			g.draw(s);
 		}
@@ -138,7 +150,7 @@ public class LocalPvP extends BasicGameState implements GameState {
 					timerList.remove(2);
 				}
 				else if (input.isKeyDown(Input.KEY_SPACE)) {
-					checkSpell(chantP1);
+					checkSpell(chantP1, p1, p2);
 					chantP1 = "";
 				}
 			}
@@ -170,7 +182,7 @@ public class LocalPvP extends BasicGameState implements GameState {
 					timerList2.remove(2);
 				}
 				else if (input.isKeyDown(Input.KEY_ENTER)) {
-					checkSpell(chantP2);
+					checkSpell(chantP2, p2, p1);
 					chantP2 = "";
 				}
 			}
@@ -239,7 +251,12 @@ public class LocalPvP extends BasicGameState implements GameState {
 		
 	}
 
-	private void checkSpell(String s) {
+	private void checkSpell(String chant, Player caster, Player opponent) {
+		for(Spell spell : spells) {
+			if(spell.getChant().equals(chant)) spell.cast(caster, opponent);
+			if(caster.equals(p1)) p1LastSpell = spell.getName();
+			else p2LastSpell = spell.getName();
+		}
 		
 	}
 
