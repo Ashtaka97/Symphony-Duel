@@ -252,7 +252,7 @@ public class LocalPvP extends BasicGameState implements GameState {
 	private void checkSpell(String chant, Player caster, Player opponent) {
 		for(Spell spell : spells) {
 			if(spell.getChant().equals(chant)) {
-				spell.cast(caster, opponent);
+				spell.cast(caster, opponent, oList);
 				if(caster.equals(p1)) p1LastSpell = spell.getName();
 				else p2LastSpell = spell.getName();
 			}

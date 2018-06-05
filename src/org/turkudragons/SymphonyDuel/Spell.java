@@ -1,5 +1,7 @@
 package org.turkudragons.SymphonyDuel;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.geom.Shape;
 
 public abstract class Spell {
@@ -27,7 +29,7 @@ public abstract class Spell {
 		this.name = name;
 	}
 	
-	public void cast(Player caster, Player opponent) {
+	public void cast(Player caster, Player opponent, ArrayList<Player> oList) {
 		
 	}
 
