@@ -3,9 +3,7 @@
  */
 package org.turkudragons.SymphonyDuel;
 
-import java.awt.List;
 import java.util.ArrayList;
-import java.util.Collection;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -108,8 +106,8 @@ public class LocalPvP extends BasicGameState implements GameState {
 		}
 		g.drawString(chantP1, 200, 450);
 		g.drawString(chantP2, 1000, 450);
-		g.drawString(p1LastSpell, 200, 445);
-		g.drawString(p2LastSpell, 1000, 445);
+		g.drawString(p1LastSpell, 200, 435);
+		g.drawString(p2LastSpell, 1000, 435);
 		for(Shape s : timerList) {
 			g.draw(s);
 		}
@@ -253,9 +251,11 @@ public class LocalPvP extends BasicGameState implements GameState {
 
 	private void checkSpell(String chant, Player caster, Player opponent) {
 		for(Spell spell : spells) {
-			if(spell.getChant().equals(chant)) spell.cast(caster, opponent);
-			if(caster.equals(p1)) p1LastSpell = spell.getName();
-			else p2LastSpell = spell.getName();
+			if(spell.getChant().equals(chant)) {
+				spell.cast(caster, opponent);
+				if(caster.equals(p1)) p1LastSpell = spell.getName();
+				else p2LastSpell = spell.getName();
+			}
 		}
 		
 	}
