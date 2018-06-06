@@ -8,20 +8,20 @@ public abstract class Spell implements Active, Visible {
 	protected int power; //Is the power of an offensive spell, the amount of buff, the id of monster, the power of shield
 	protected int count; //how many times spell is cast aka. amount of summons
 	protected boolean collidable;
-	protected boolean aoe;
 	protected Shape area;
 	protected Type type;
+	protected Target target;
 	protected Element element;
 	protected float speed;
 	protected String chant;
 	protected String name;
 	
-	public Spell(int power, int count, boolean collidable, boolean aoe, Shape area, Type type, Element element, float speed, String chant, String name) {
+	public Spell(int power, int count, boolean collidable, Shape area, Type type, Target target, Element element, float speed, String chant, String name) {
 		this.power = power;
 		this.count = count;
-		this.aoe = aoe;
 		this.area = area;
 		this.type = type;
+		this.target = target;
 		this.element = element;
 		this.speed = speed;
 		this.chant = chant;

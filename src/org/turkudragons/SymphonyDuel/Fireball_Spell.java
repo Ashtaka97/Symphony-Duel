@@ -7,20 +7,18 @@ import org.newdawn.slick.Graphics;
 public class Fireball_Spell extends Spell {
 
 	public Fireball_Spell() {
-		//(int power, int count, boolean collidable, boolean aoe, Shape area, Type type, Element element, float speed, String chant)
-		super(10, 1, true, false, null, Type.ATTACK, Element.HEAT, 1, "DDD", "Fireball");		
+		//(int power, int count, boolean collidable, Shape area, Type type, Target target, Element element, float speed, String chant, String name)
+		super(10, 1, true, null, Type.ATTACK, Target.ENEMY, Element.HEAT, 1, "DDD", "Fireball");
 	}
 	
 	public void cast(Player caster, Player opponent, ArrayList<Object> oList) {
 		
 	}
 
-	@Override
 	public void update(ArrayList<Object> o, int delta) {
 		
 	}
 
-	@Override
 	public void display(Graphics g) {
 		
 	}

@@ -22,7 +22,6 @@ public class Main extends StateBasedGame {
 			appgc.setTargetFrameRate(60);
 			appgc.start();
 		} catch (SlickException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
