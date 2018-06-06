@@ -60,7 +60,7 @@ public class LocalPvP extends BasicGameState implements GameState {
 	private Player p2;
 	private String chantP1;
 	private String chantP2;
-	static ArrayList<Player> oList;
+	static ArrayList<Object> oList;
 	private ArrayList<Shape> timerList;
 	private ArrayList<Shape> timerList2;
 	private ArrayList<Spell> spells;
@@ -86,7 +86,7 @@ public class LocalPvP extends BasicGameState implements GameState {
 		chantP2 = "";
 		p1 = new Player(200, 500);
 		p2 = new Player(1000, 500);
-		oList = new ArrayList<Player>();
+		oList = new ArrayList<Object>();
 		oList.add(p1);
 		oList.add(p2);
 		timerList = new ArrayList<Shape>();
@@ -101,8 +101,8 @@ public class LocalPvP extends BasicGameState implements GameState {
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
 		g.drawString(timer+"", 550, 100);
 		g.drawString(timer2+"", 600, 100);
-		for(Player p : oList) {
-			p.draw(g);
+		for(Object v : oList) {
+			((Visible)v).display(g);
 		}
 		g.drawString(chantP1, 200, 450);
 		g.drawString(chantP2, 1000, 450);
@@ -118,6 +118,10 @@ public class LocalPvP extends BasicGameState implements GameState {
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
+		
+		for(Object a : oList) {
+			((Active)a).update(oList, delta);
+		}
 		
 		try {
 			

@@ -2,6 +2,8 @@ package org.turkudragons.SymphonyDuel;
 
 import java.util.ArrayList;
 
+import org.newdawn.slick.Graphics;
+
 public class Fireball_Spell extends Spell {
 
 	public Fireball_Spell() {
@@ -9,7 +11,17 @@ public class Fireball_Spell extends Spell {
 		super(10, 1, true, false, null, Type.ATTACK, Element.HEAT, 1, "DDD", "Fireball");		
 	}
 	
-	public void cast(Player caster, Player opponent, ArrayList<Player> oList) {
+	public void cast(Player caster, Player opponent, ArrayList<Object> oList) {
+		
+	}
+
+	@Override
+	public void update(ArrayList<Object> o, int delta) {
+		
+	}
+
+	@Override
+	public void display(Graphics g) {
 		
 	}
 }

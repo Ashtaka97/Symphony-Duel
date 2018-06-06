@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.newdawn.slick.geom.Shape;
 
-public abstract class Spell {
+public abstract class Spell implements Active, Visible {
 	protected int power; //Is the power of an offensive spell, the amount of buff, the id of monster, the power of shield
 	protected int count; //how many times spell is cast aka. amount of summons
 	protected boolean collidable;
@@ -29,7 +29,7 @@ public abstract class Spell {
 		this.name = name;
 	}
 	
-	public void cast(Player caster, Player opponent, ArrayList<Player> oList) {
+	public void cast(Player caster, Player opponent, ArrayList<Object> oList) {
 		
 	}
 

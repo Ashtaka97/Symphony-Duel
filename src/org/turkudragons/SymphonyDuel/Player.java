@@ -1,10 +1,12 @@
 package org.turkudragons.SymphonyDuel;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
-public class Player {
+public class Player implements Visible, Active{
 
 	int hp;
 	int x;
@@ -20,11 +22,11 @@ public class Player {
 		castSpeed = 1.0;
 	}
 	
-	public void draw(Graphics g) {
+	public void display(Graphics g) {
 		g.draw(hitbox);
 	}
-	
-	public void update() {
+
+	public void update(ArrayList<Object> o, int delta) {
 		
 	}
 
