@@ -49,14 +49,6 @@ public abstract class Spell implements Active, Visible {
 		this.count = count;
 	}
 
-	public boolean isAoe() {
-		return aoe;
-	}
-
-	public void setAoe(boolean aoe) {
-		this.aoe = aoe;
-	}
-
 	public Type getType() {
 		return type;
 	}

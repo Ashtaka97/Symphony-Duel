@@ -12,14 +12,16 @@ public class Player implements Visible, Active{
 	int x;
 	int y;
 	Shape hitbox;
-	double castSpeed;
+	int castSpeed;
+	int chantReaction;
 	
 	public Player(int x, int y) {
 		hp = 100;
 		this.x = x;
 		this.y = y;
 		hitbox = new Rectangle(x, y, 16, 32);
-		castSpeed = 1.0;
+		castSpeed = 1;
+		chantReaction = 3;
 	}
 	
 	public void display(Graphics g) {

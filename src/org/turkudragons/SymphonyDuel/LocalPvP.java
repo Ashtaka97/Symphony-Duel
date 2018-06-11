@@ -52,7 +52,6 @@ public class LocalPvP extends BasicGameState implements GameState {
 	int tapInterval;
 	private int timer2;
 	int tapInterval2;
-	private int step;
 	private int grace;
 	private int grace2;
 	private Input input;
@@ -78,7 +77,6 @@ public class LocalPvP extends BasicGameState implements GameState {
 		tapInterval = 750;
 		timer2 = 0;
 		tapInterval2 = 750;
-		step = 1;
 		grace = 0;
 		grace2 = 0;
 		input = gc.getInput();
@@ -157,6 +155,10 @@ public class LocalPvP extends BasicGameState implements GameState {
 				}
 			}
 			
+		} catch(IndexOutOfBoundsException e) {
+			
+		} try {
+			
 			// Player 2 chanting
 			if(grace2 <= 0) {
 				if (input.isKeyDown(Input.KEY_UP)) {
@@ -192,32 +194,28 @@ public class LocalPvP extends BasicGameState implements GameState {
 			
 		}
 		
-		if(step == 1) {
-			int i = 0;
-			for(Shape s : timerList) {
-				if(i < 2) i++;
-				else{
-					s.setX(s.getX()-delta);
-				}
+		int i = 0;
+		for(Shape s : timerList) {
+			if(i < 2) i++;
+			else{
+				s.setX(s.getX()-delta/p1.chantReaction);
 			}
-			int i2 = 0;
-			for(Shape s : timerList2) {
-				if(i2 < 2) i2++;
-				else{
-					s.setX(s.getX()-delta);
-				}
-			}
-			step = 0;
 		}
-		else step++;
+		int i2 = 0;
+		for(Shape s : timerList2) {
+			if(i2 < 2) i2++;
+			else{
+				s.setX(s.getX()-delta/p2.chantReaction);
+			}
+		}
 		
-		if(timer >= tapInterval) {
+		if(timer >= tapInterval/p1.castSpeed) {
 			timerList.add(new Rectangle(500, 100, 3, 20));
 			timer = 0;
 		}
 		else timer += 1+delta;
 		
-		if(timer2 >= tapInterval2) {
+		if(timer2 >= tapInterval2/p1.castSpeed) {
 			timerList2.add(new Rectangle(1200, 100, 3, 20));
 			timer2 = 0;
 		}
