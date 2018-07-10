@@ -13,7 +13,8 @@ public class Fireball_Spell extends Spell {
 	}
 	
 	public void cast(Player caster, Player opponent, ArrayList<Object> oList) {
-		super.cast(caster, opponent, oList);
+		this.caster = caster;
+		this.opponent = opponent;
 		hitbox = new Rectangle(caster.x, caster.y+8, 8, 8);
 		oList.add(this);
 	}

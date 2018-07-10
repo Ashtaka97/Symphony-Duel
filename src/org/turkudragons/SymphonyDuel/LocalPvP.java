@@ -63,6 +63,7 @@ public class LocalPvP extends BasicGameState implements GameState {
 	private ArrayList<Shape> timerList;
 	private ArrayList<Shape> timerList2;
 	private ArrayList<Spell> spells;
+	private ArrayList<Spell> spellsBackup;
 	private String p1LastSpell;
 	private String p2LastSpell;
 
@@ -121,6 +122,7 @@ public class LocalPvP extends BasicGameState implements GameState {
 		
 		for(int i = oList.size()-1; i >= 0 ; i--) {
 			((Active)oList.get(i)).update(oList, delta);
+			if(((Active)oList.get(i)).getDelete()) oList.remove(i);
 		}
 		
 		try {
@@ -154,6 +156,11 @@ public class LocalPvP extends BasicGameState implements GameState {
 				else if (input.isKeyDown(Input.KEY_SPACE)) {
 					checkSpell(chantP1, p1, p2);
 					chantP1 = "";
+				}
+				else if(input.isKeyDown(Input.KEY_0)) {
+					checkSpell("DDD", p1, p2);
+					checkSpell("DDD", p2, p1);
+					grace = 300;
 				}
 			}
 			
@@ -254,12 +261,23 @@ public class LocalPvP extends BasicGameState implements GameState {
 	}
 
 	private void checkSpell(String chant, Player caster, Player opponent) {
+		Spell s = null;
 		for(Spell spell : spells) {
 			if(spell.chant.equals(chant)) {
-				spell.cast(caster, opponent, oList);
-				if(caster.equals(p1)) p1LastSpell = spell.name;
-				else p2LastSpell = spell.name;
+				s = spell;
 			}
+		}
+		if(!s.equals(null)) {
+			s.cast(caster, opponent, oList);
+			spells.remove(s);
+			if(s instanceof Fireball_Spell) {
+				spells.add(new Fireball_Spell());
+			}
+			if(s instanceof GiftOfLife_Spell) {
+				spells.add(new GiftOfLife_Spell());
+			}
+			if(caster.equals(p1)) p1LastSpell = s.name;
+			else p2LastSpell = s.name;
 		}
 	}
 

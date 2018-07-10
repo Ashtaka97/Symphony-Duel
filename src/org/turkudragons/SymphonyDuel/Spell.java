@@ -5,11 +5,12 @@ import java.util.ArrayList;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Shape;
 
-public abstract class Spell implements Active, Visible {
+public class Spell implements Active, Visible {
 	protected int power; //Is the damage of an offensive spell, the amount of buff, the id of monster, the power of shield
 	protected int count; //how many times spell is cast aka. amount of summons
 	protected int x;
 	protected int y;
+	protected Spell spell;
 	protected boolean collidable;
 	protected Shape hitbox;
 	protected Type type;
@@ -20,6 +21,7 @@ public abstract class Spell implements Active, Visible {
 	protected String name;
 	protected Player caster;
 	protected Player opponent;
+	boolean delete;
 	
 	public Spell(int power, int count, boolean collidable, Type type, Target target, Element element, float speed, String chant, String name) {
 		this.power = power;
@@ -33,9 +35,12 @@ public abstract class Spell implements Active, Visible {
 		this.name = name;
 	}
 	
+	public Spell(Spell s) {
+		this.spell = s;
+	}
+	
 	public void cast(Player caster, Player opponent, ArrayList<Object> oList) {
-		this.caster = caster;
-		this.opponent = opponent;
+		
 	}
 	
 	public void update(ArrayList<Object> oList, int delta) {
@@ -44,8 +49,8 @@ public abstract class Spell implements Active, Visible {
 		for(int i = 2; i < spellList.size(); i++) {
 			Spell s = (Spell)spellList.get(i);
 			if(collidable && s.hitbox.intersects(hitbox) && s.collidable && !s.equals(this)) {
-				oList.remove(this);
-				oList.remove(s);
+				this.delete = true;
+				s.delete = true;
 			}
 		}
 		if(hitbox.intersects(opponent.hitbox)) {
@@ -61,6 +66,10 @@ public abstract class Spell implements Active, Visible {
 
 	public void display(Graphics g) {
 		g.draw(hitbox);
+	}
+	
+	public boolean getDelete() {
+		return delete;
 	}
 
 }

@@ -15,6 +15,7 @@ public class Player implements Visible, Active{
 	protected int castSpeed;
 	protected int chantReaction;
 	protected int maxHp;
+	protected boolean delete = false;
 	
 	public Player(int x, int y) {
 		hp = 100;
@@ -36,4 +37,7 @@ public class Player implements Visible, Active{
 		}
 	}
 
+	public boolean getDelete() {
+		return delete;
+	}
 }
