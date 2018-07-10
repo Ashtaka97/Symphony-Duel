@@ -266,17 +266,21 @@ public class LocalPvP extends BasicGameState implements GameState {
 				s = spell;
 			}
 		}
-		if(!s.equals(null)) {
-			s.cast(caster, opponent, oList);
-			spells.remove(s);
-			if(s instanceof Fireball_Spell) {
-				spells.add(new Fireball_Spell());
+		try {
+			if(!s.equals(null)) {
+				s.cast(caster, opponent, oList);
+				spells.remove(s);
+				if(s instanceof Fireball_Spell) {
+					spells.add(new Fireball_Spell());
+				}
+				if(s instanceof GiftOfLife_Spell) {
+					spells.add(new GiftOfLife_Spell());
+				}
+				if(caster.equals(p1)) p1LastSpell = s.name;
+				else p2LastSpell = s.name;
 			}
-			if(s instanceof GiftOfLife_Spell) {
-				spells.add(new GiftOfLife_Spell());
-			}
-			if(caster.equals(p1)) p1LastSpell = s.name;
-			else p2LastSpell = s.name;
+		} catch(NullPointerException e) {
+			
 		}
 	}
 

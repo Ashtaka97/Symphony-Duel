@@ -21,7 +21,7 @@ public class Spell implements Active, Visible {
 	protected String name;
 	protected Player caster;
 	protected Player opponent;
-	boolean delete;
+	protected boolean delete;
 	
 	public Spell(int power, int count, boolean collidable, Type type, Target target, Element element, float speed, String chant, String name) {
 		this.power = power;
@@ -55,12 +55,12 @@ public class Spell implements Active, Visible {
 		}
 		if(hitbox.intersects(opponent.hitbox)) {
 			opponent.hp -= power;
-			oList.remove(this);
+			delete = true;
 		}
 		if(caster.hitbox.getX() < opponent.hitbox.getX()) {
-			hitbox.setX(hitbox.getX()+((speed+delta)/2));
+			hitbox.setX(hitbox.getX()+((speed*delta)/2));
 		} else {
-			hitbox.setX(hitbox.getX()-((speed+delta)/2));
+			hitbox.setX(hitbox.getX()-((speed*delta)/2));
 		}
 	}
 
