@@ -63,7 +63,6 @@ public class LocalPvP extends BasicGameState implements GameState {
 	private ArrayList<Shape> timerList;
 	private ArrayList<Shape> timerList2;
 	private ArrayList<Spell> spells;
-	private ArrayList<Spell> spellsBackup;
 	private String p1LastSpell;
 	private String p2LastSpell;
 
