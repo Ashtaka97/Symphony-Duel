@@ -8,15 +8,17 @@ import org.newdawn.slick.geom.Shape;
 
 public class Player implements Visible, Active{
 
-	int hp;
-	int x;
-	int y;
-	Shape hitbox;
-	int castSpeed;
-	int chantReaction;
+	protected int hp;
+	protected int x;
+	protected int y;
+	protected Shape hitbox;
+	protected int castSpeed;
+	protected int chantReaction;
+	protected int maxHp;
 	
 	public Player(int x, int y) {
 		hp = 100;
+		maxHp = 100;
 		this.x = x;
 		this.y = y;
 		hitbox = new Rectangle(x, y, 16, 32);
@@ -29,7 +31,9 @@ public class Player implements Visible, Active{
 	}
 
 	public void update(ArrayList<Object> o, int delta) {
-		
+		if(hp > maxHp) {
+			hp = maxHp;
+		}
 	}
 
 }

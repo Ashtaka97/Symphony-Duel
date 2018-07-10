@@ -102,8 +102,10 @@ public class LocalPvP extends BasicGameState implements GameState {
 		for(Object v : oList) {
 			((Visible)v).display(g);
 		}
-		g.drawString(chantP1, 200, 450);
-		g.drawString(chantP2, 1000, 450);
+		g.drawString(chantP1, 200, 465);
+		g.drawString(chantP2, 1000, 465);
+		g.drawString("Hp: " + p1.hp, 200, 450);
+		g.drawString("Hp: " + p2.hp, 1000, 450);
 		g.drawString(p1LastSpell, 200, 435);
 		g.drawString(p2LastSpell, 1000, 435);
 		for(Shape s : timerList) {
@@ -117,8 +119,8 @@ public class LocalPvP extends BasicGameState implements GameState {
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
 		
-		for(Object a : oList) {
-			((Active)a).update(oList, delta);
+		for(int i = oList.size()-1; i >= 0 ; i--) {
+			((Active)oList.get(i)).update(oList, delta);
 		}
 		
 		try {
@@ -253,13 +255,15 @@ public class LocalPvP extends BasicGameState implements GameState {
 
 	private void checkSpell(String chant, Player caster, Player opponent) {
 		for(Spell spell : spells) {
-			if(spell.getChant().equals(chant)) {
+			if(spell.chant.equals(chant)) {
 				spell.cast(caster, opponent, oList);
-				if(caster.equals(p1)) p1LastSpell = spell.getName();
-				else p2LastSpell = spell.getName();
+				if(caster.equals(p1)) p1LastSpell = spell.name;
+				else p2LastSpell = spell.name;
+			} else {
+				if(caster.equals(p1)) p1LastSpell = "";
+				else p2LastSpell = "";
 			}
 		}
-		
 	}
 
 	@Override

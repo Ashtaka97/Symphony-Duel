@@ -9,5 +9,5 @@ enum Element {
 }
 
 enum Target {
-	SELF, ENEMY, HOSTILE, FRIENDLY
+	SELF, ENEMY, HOSTILE, FRIENDLY, ALL
 }
