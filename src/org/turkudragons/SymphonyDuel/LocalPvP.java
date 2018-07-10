@@ -259,9 +259,6 @@ public class LocalPvP extends BasicGameState implements GameState {
 				spell.cast(caster, opponent, oList);
 				if(caster.equals(p1)) p1LastSpell = spell.name;
 				else p2LastSpell = spell.name;
-			} else {
-				if(caster.equals(p1)) p1LastSpell = "";
-				else p2LastSpell = "";
 			}
 		}
 	}
