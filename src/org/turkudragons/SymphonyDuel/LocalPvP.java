@@ -59,6 +59,8 @@ public class LocalPvP extends BasicGameState implements GameState {
 	private Player p2;
 	private String chantP1;
 	private String chantP2;
+	private boolean P1Crit;
+	private boolean P2Crit;
 	static ArrayList<Object> oList;
 	private ArrayList<Shape> timerList;
 	private ArrayList<Shape> timerList2;
@@ -82,6 +84,8 @@ public class LocalPvP extends BasicGameState implements GameState {
 		input = gc.getInput();
 		chantP1 = "";
 		chantP2 = "";
+		P1Crit = true;
+		P2Crit = true;
 		p1 = new Player(200, 500);
 		p2 = new Player(1000, 500);
 		oList = new ArrayList<Object>();
@@ -89,9 +93,11 @@ public class LocalPvP extends BasicGameState implements GameState {
 		oList.add(p2);
 		timerList = new ArrayList<Shape>();
 		timerList.add(new Rectangle(100, 100, 50, 20));
+		timerList.add(new Rectangle(115, 100, 6, 20));
 		timerList.add(new Rectangle(85, 100, 15, 20));
 		timerList2 = new ArrayList<Shape>();
 		timerList2.add(new Rectangle(800, 100, 50, 20));
+		timerList2.add(new Rectangle(815, 100, 6, 20));
 		timerList2.add(new Rectangle(785, 100, 15, 20));
 	}
 
@@ -102,6 +108,8 @@ public class LocalPvP extends BasicGameState implements GameState {
 		for(Object v : oList) {
 			((Visible)v).display(g);
 		}
+		g.drawString(P1Crit + "", 200, 420);
+		g.drawString(P2Crit + "", 1000, 420);
 		g.drawString(chantP1, 200, 465);
 		g.drawString(chantP2, 1000, 465);
 		g.drawString("Hp: " + p1.hp, 200, 450);
@@ -129,28 +137,44 @@ public class LocalPvP extends BasicGameState implements GameState {
 			// Player 1 chanting
 			if(grace <= 0) {
 				if (input.isKeyDown(Input.KEY_W)) {
-					if(timerList.get(0).intersects(timerList.get(2))) chantP1 += "W";
+					if(timerList.get(1).intersects(timerList.get(3))) chantP1 += "W";
+					else if(timerList.get(0).intersects(timerList.get(3))) {
+						chantP1 += "W";
+						P1Crit = false;
+					}
 					else chantP1 = "";
 					grace = 300;
-					timerList.remove(2);
+					timerList.remove(3);
 				}
 				else if (input.isKeyDown(Input.KEY_S)) {
-					if(timerList.get(0).intersects(timerList.get(2))) chantP1 += "S";
+					if(timerList.get(1).intersects(timerList.get(3))) chantP1 += "S";
+					else if(timerList.get(0).intersects(timerList.get(3))) {
+						chantP1 += "S";
+						P1Crit = false;
+					}
 					else chantP1 = "";
 					grace = 300;
-					timerList.remove(2);
+					timerList.remove(3);
 				}
 				else if (input.isKeyDown(Input.KEY_A)) {
-					if(timerList.get(0).intersects(timerList.get(2))) chantP1 += "A";
+					if(timerList.get(1).intersects(timerList.get(3))) chantP1 += "A";
+					else if(timerList.get(0).intersects(timerList.get(3))) {
+						chantP1 += "A";
+						P1Crit = false;
+					}
 					else chantP1 = "";
 					grace = 300;
-					timerList.remove(2);
+					timerList.remove(3);
 				}
 				else if (input.isKeyDown(Input.KEY_D)) {
-					if(timerList.get(0).intersects(timerList.get(2))) chantP1 += "D";
+					if(timerList.get(1).intersects(timerList.get(3))) chantP1 += "D";
+					else if(timerList.get(0).intersects(timerList.get(3))) {
+						chantP1 += "D";
+						P1Crit = false;
+					}
 					else chantP1 = "";
 					grace = 300;
-					timerList.remove(2);
+					timerList.remove(3);
 				}
 				else if (input.isKeyDown(Input.KEY_SPACE)) {
 					checkSpell(chantP1, p1, p2);
@@ -170,28 +194,44 @@ public class LocalPvP extends BasicGameState implements GameState {
 			// Player 2 chanting
 			if(grace2 <= 0) {
 				if (input.isKeyDown(Input.KEY_UP)) {
-					if(timerList2.get(0).intersects(timerList2.get(2))) chantP2 += "W";
+					if(timerList2.get(1).intersects(timerList2.get(3))) chantP2 += "W";
+					else if(timerList2.get(0).intersects(timerList2.get(3))) {
+						chantP2 += "W";
+						P2Crit = false;
+					}
 					else chantP2 = "";
 					grace2 = 300;
-					timerList2.remove(2);
+					timerList2.remove(3);
 				}
 				else if (input.isKeyDown(Input.KEY_DOWN)) {
-					if(timerList2.get(0).intersects(timerList2.get(2))) chantP2 += "S";
+					if(timerList2.get(1).intersects(timerList2.get(3))) chantP2 += "S";
+					else if(timerList2.get(0).intersects(timerList2.get(3))) {
+						chantP2 += "S";
+						P2Crit = false;
+					}
 					else chantP2 = "";
 					grace2 = 300;
-					timerList2.remove(2);
+					timerList2.remove(3);
 				}
 				else if (input.isKeyDown(Input.KEY_LEFT)) {
-					if(timerList2.get(0).intersects(timerList2.get(2))) chantP2 += "A";
+					if(timerList2.get(1).intersects(timerList2.get(3))) chantP2 += "A";
+					else if(timerList2.get(0).intersects(timerList2.get(3))) {
+						chantP2 += "A";
+						P2Crit = false;
+					}
 					else chantP2 = "";
 					grace2 = 300;
-					timerList2.remove(2);
+					timerList2.remove(3);
 				}
 				else if (input.isKeyDown(Input.KEY_RIGHT)) {
-					if(timerList2.get(0).intersects(timerList2.get(2))) chantP2 += "D";
+					if(timerList2.get(1).intersects(timerList2.get(3))) chantP2 += "D";
+					else if(timerList2.get(0).intersects(timerList2.get(3))) {
+						chantP2 += "D";
+						P2Crit = false;
+					}
 					else chantP2 = "";
 					grace2 = 300;
-					timerList2.remove(2);
+					timerList2.remove(3);
 				}
 				else if (input.isKeyDown(Input.KEY_ENTER)) {
 					checkSpell(chantP2, p2, p1);
@@ -204,14 +244,14 @@ public class LocalPvP extends BasicGameState implements GameState {
 		
 		int i = 0;
 		for(Shape s : timerList) {
-			if(i < 2) i++;
+			if(i < 3) i++;
 			else{
 				s.setX(s.getX()-delta/p1.chantReaction);
 			}
 		}
 		int i2 = 0;
 		for(Shape s : timerList2) {
-			if(i2 < 2) i2++;
+			if(i2 < 3) i2++;
 			else{
 				s.setX(s.getX()-delta/p2.chantReaction);
 			}
@@ -230,10 +270,11 @@ public class LocalPvP extends BasicGameState implements GameState {
 		else timer2 += 1+delta;
 		
 		try {
-			if(timerList.get(2).intersects(timerList.get(1))) {
-				timerList.remove(2);
+			if(timerList.get(3).intersects(timerList.get(2))) {
+				timerList.remove(3);
 				chantP1 = "";
 				grace = 300;
+				P1Crit = true;
 			}
 		} catch(IndexOutOfBoundsException e) {
 			
@@ -244,10 +285,11 @@ public class LocalPvP extends BasicGameState implements GameState {
 		}
 		
 		try {
-			if(timerList2.get(2).intersects(timerList2.get(1))) {
-				timerList2.remove(2);
+			if(timerList2.get(3).intersects(timerList2.get(2))) {
+				timerList2.remove(3);
 				chantP2 = "";
 				grace2 = 300;
+				P2Crit = true;
 			}
 		} catch(IndexOutOfBoundsException e) {
 			
@@ -261,6 +303,15 @@ public class LocalPvP extends BasicGameState implements GameState {
 
 	private void checkSpell(String chant, Player caster, Player opponent) {
 		Spell s = null;
+		boolean crit;
+		if(caster.equals(p1)) {
+			crit = P1Crit;
+			P1Crit = true;
+		}
+		else {
+			crit = P2Crit;
+			P2Crit = true;
+		}
 		for(Spell spell : spells) {
 			if(spell.chant.equals(chant)) {
 				s = spell;
@@ -268,7 +319,7 @@ public class LocalPvP extends BasicGameState implements GameState {
 		}
 		try {
 			if(!s.equals(null)) {
-				s.cast(caster, opponent, oList);
+				s.cast(caster, opponent, oList, crit);
 				spells.remove(s);
 				if(s instanceof Fireball_Spell) {
 					spells.add(new Fireball_Spell());

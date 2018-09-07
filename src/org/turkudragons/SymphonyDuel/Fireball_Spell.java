@@ -9,13 +9,16 @@ public class Fireball_Spell extends Spell {
 
 	public Fireball_Spell() {
 		//(int power, int count, boolean collidable, Type type, Target target, Element element, float speed, String chant, String name)
-		super(10, 1, true, Type.ATTACK, Target.ENEMY, Element.HEAT, 1, "DDD", "Fireball");
+		super(20, 1, true, Type.ATTACK, Target.ENEMY, Element.HEAT, 1, "DDD", "Fireball");
 	}
 	
-	public void cast(Player caster, Player opponent, ArrayList<Object> oList) {
+	public void cast(Player caster, Player opponent, ArrayList<Object> oList, boolean crit) {
 		this.caster = caster;
 		this.opponent = opponent;
-		hitbox = new Rectangle(caster.x, caster.y+8, 8, 8);
+		hitbox = new Rectangle(caster.x, caster.y+10, 8, 8);
+		if(crit) {
+			power = power*2;
+		}
 		oList.add(this);
 	}
 

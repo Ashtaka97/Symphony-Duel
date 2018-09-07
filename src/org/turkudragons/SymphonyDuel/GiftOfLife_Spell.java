@@ -11,7 +11,10 @@ public class GiftOfLife_Spell extends Spell {
 		super(100, 1, false, Type.BUFFDEBUFF, Target.SELF, Element.RADIANT, 1, "WWW", "Gift Of Life");
 	}
 	
-	public void cast(Player caster, Player opponent, ArrayList<Object> oList) {
+	public void cast(Player caster, Player opponent, ArrayList<Object> oList, boolean crit) {
+		if(crit) {
+			power = power*2;
+		}
 		caster.hp += power;
 	}
 

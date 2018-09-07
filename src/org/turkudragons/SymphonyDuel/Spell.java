@@ -39,7 +39,7 @@ public class Spell implements Active, Visible {
 		this.spell = s;
 	}
 	
-	public void cast(Player caster, Player opponent, ArrayList<Object> oList) {
+	public void cast(Player caster, Player opponent, ArrayList<Object> oList, boolean crit) {
 		
 	}
 	
