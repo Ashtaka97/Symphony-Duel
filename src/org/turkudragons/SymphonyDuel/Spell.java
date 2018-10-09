@@ -3,6 +3,7 @@ package org.turkudragons.SymphonyDuel;
 import java.util.ArrayList;
 
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
 public class Spell implements Active, Visible {
@@ -55,19 +56,27 @@ public class Spell implements Active, Visible {
 		this.caster = caster;
 		this.opponent = opponent;
 		if(this.type == Type.ATTACK) {
-			hitbox.setX(caster.x);
-			hitbox.setY(caster.y+10);
+			if(this.collidable) {
+				if(this.target == Target.HOSTILE) {
+					hitbox = new Rectangle(caster.x+4, caster.y+10, 8, 8);
+				}
+			}
+		}
+		else if(this.type == Type.BUFFDEBUFF) {
+			if(this.target == Target.SELF) {
+				if(this.element == Element.RADIANT) {
+					caster.hp += power;
+				}
+			}
 		}
 		for(int i = 0; i < count; i++)
 			oList.add(this);
 	}
 	
 	public void update(ArrayList<Object> oList, int delta) {
-		ArrayList<Object> spellList = new ArrayList<Object>(oList);
-		spellList.remove(this);
-		for(int i = 2; i < spellList.size(); i++) {
-			Spell s = (Spell)spellList.get(i);
-			if(collidable && s.hitbox.intersects(hitbox) && s.collidable && !s.equals(this)) {
+		for(int i = 2; i < oList.size(); i++) {
+			Spell s = (Spell)oList.get(i);
+			if(collidable && s.hitbox.intersects(hitbox) && s.collidable && !(s.equals(this))) {
 				this.delete = true;
 				s.delete = true;
 			}
