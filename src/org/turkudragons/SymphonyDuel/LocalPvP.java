@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.turkudragons.SymphonyDuel;
 
 import java.util.ArrayList;
