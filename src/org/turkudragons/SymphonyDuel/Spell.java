@@ -10,7 +10,6 @@ public class Spell implements Active, Visible {
 	protected int count; //how many times spell is cast aka. amount of summons
 	protected int x;
 	protected int y;
-	protected Spell spell;
 	protected boolean collidable;
 	protected Shape hitbox;
 	protected Type type;
@@ -23,7 +22,7 @@ public class Spell implements Active, Visible {
 	protected Player opponent;
 	protected boolean delete;
 	
-	public Spell(int power, int count, boolean collidable, Type type, Target target, Element element, float speed, String chant, String name) {
+	public Spell(int power, int count, boolean collidable, Shape hitbox, Type type, Target target, Element element, float speed, String chant, String name) {
 		this.power = power;
 		this.count = count;
 		this.type = type;
@@ -32,15 +31,35 @@ public class Spell implements Active, Visible {
 		this.speed = speed;
 		this.chant = chant;
 		this.collidable = collidable;
+		this.hitbox = hitbox;
 		this.name = name;
 	}
 	
 	public Spell(Spell s) {
-		this.spell = s;
+		this.power = s.power;
+		this.count = s.count;
+		this.type = s.type;
+		this.target = s.target;
+		this.element = s.element;
+		this.speed = s.speed;
+		this.chant = s.chant;
+		this.collidable = s.collidable;
+		this.hitbox = s.hitbox;
+		this.name = s.name;
 	}
 	
 	public void cast(Player caster, Player opponent, ArrayList<Object> oList, boolean crit) {
-		
+		if(crit) {
+			power = power*2;
+		}
+		this.caster = caster;
+		this.opponent = opponent;
+		if(this.type == Type.ATTACK) {
+			hitbox.setX(caster.x);
+			hitbox.setY(caster.y+10);
+		}
+		for(int i = 0; i < count; i++)
+			oList.add(this);
 	}
 	
 	public void update(ArrayList<Object> oList, int delta) {

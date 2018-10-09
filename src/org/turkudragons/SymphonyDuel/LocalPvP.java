@@ -48,12 +48,13 @@ public class LocalPvP extends BasicGameState implements GameState {
 	 * inputEnded, inputStarted, isAcceptingInput, setInput
 	 */
 
-	private int timer;
-	int tapInterval;
+	private int timer1;
+	int tapInterval1;
 	private int timer2;
 	int tapInterval2;
-	private int grace;
-	private int grace2;
+	private int currentGrace1;
+	private int currentGrace2;
+	private final int grace = 300;
 	private Input input;
 	private Player p1;
 	private Player p2;
@@ -62,7 +63,7 @@ public class LocalPvP extends BasicGameState implements GameState {
 	private boolean P1Crit;
 	private boolean P2Crit;
 	static ArrayList<Object> oList;
-	private ArrayList<Shape> timerList;
+	private ArrayList<Shape> timerList1;
 	private ArrayList<Shape> timerList2;
 	private ArrayList<Spell> spells;
 	private String p1LastSpell;
@@ -75,12 +76,12 @@ public class LocalPvP extends BasicGameState implements GameState {
 		spells.add(new GiftOfLife_Spell());
 		p1LastSpell = "";
 		p2LastSpell = "";
-		timer = 0;
-		tapInterval = 750;
+		timer1 = 0;
+		tapInterval1 = 750;
 		timer2 = 0;
 		tapInterval2 = 750;
-		grace = 0;
-		grace2 = 0;
+		currentGrace1 = 0;
+		currentGrace2 = 0;
 		input = gc.getInput();
 		chantP1 = "";
 		chantP2 = "";
@@ -91,10 +92,10 @@ public class LocalPvP extends BasicGameState implements GameState {
 		oList = new ArrayList<Object>();
 		oList.add(p1);
 		oList.add(p2);
-		timerList = new ArrayList<Shape>();
-		timerList.add(new Rectangle(100, 100, 50, 20));
-		timerList.add(new Rectangle(115, 100, 6, 20));
-		timerList.add(new Rectangle(85, 100, 15, 20));
+		timerList1 = new ArrayList<Shape>();
+		timerList1.add(new Rectangle(100, 100, 50, 20));
+		timerList1.add(new Rectangle(115, 100, 6, 20));
+		timerList1.add(new Rectangle(85, 100, 15, 20));
 		timerList2 = new ArrayList<Shape>();
 		timerList2.add(new Rectangle(800, 100, 50, 20));
 		timerList2.add(new Rectangle(815, 100, 6, 20));
@@ -103,7 +104,7 @@ public class LocalPvP extends BasicGameState implements GameState {
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-		g.drawString(timer+"", 550, 100);
+		g.drawString(timer1+"", 550, 100);
 		g.drawString(timer2+"", 600, 100);
 		for(Object v : oList) {
 			((Visible)v).display(g);
@@ -116,7 +117,7 @@ public class LocalPvP extends BasicGameState implements GameState {
 		g.drawString("Hp: " + p2.hp, 1000, 450);
 		g.drawString(p1LastSpell, 200, 435);
 		g.drawString(p2LastSpell, 1000, 435);
-		for(Shape s : timerList) {
+		for(Shape s : timerList1) {
 			g.draw(s);
 		}
 		for(Shape s : timerList2) {
@@ -135,46 +136,46 @@ public class LocalPvP extends BasicGameState implements GameState {
 		try {
 			
 			// Player 1 chanting
-			if(grace <= 0) {
+			if(currentGrace1 <= 0) {
 				if (input.isKeyDown(Input.KEY_W)) {
-					if(timerList.get(1).intersects(timerList.get(3))) chantP1 += "W";
-					else if(timerList.get(0).intersects(timerList.get(3))) {
+					if(timerList1.get(1).intersects(timerList1.get(3))) chantP1 += "W";
+					else if(timerList1.get(0).intersects(timerList1.get(3))) {
 						chantP1 += "W";
 						P1Crit = false;
 					}
 					else chantP1 = "";
-					grace = 300;
-					timerList.remove(3);
+					currentGrace1 = grace;
+					timerList1.remove(3);
 				}
 				else if (input.isKeyDown(Input.KEY_S)) {
-					if(timerList.get(1).intersects(timerList.get(3))) chantP1 += "S";
-					else if(timerList.get(0).intersects(timerList.get(3))) {
+					if(timerList1.get(1).intersects(timerList1.get(3))) chantP1 += "S";
+					else if(timerList1.get(0).intersects(timerList1.get(3))) {
 						chantP1 += "S";
 						P1Crit = false;
 					}
 					else chantP1 = "";
-					grace = 300;
-					timerList.remove(3);
+					currentGrace1 = grace;
+					timerList1.remove(3);
 				}
 				else if (input.isKeyDown(Input.KEY_A)) {
-					if(timerList.get(1).intersects(timerList.get(3))) chantP1 += "A";
-					else if(timerList.get(0).intersects(timerList.get(3))) {
+					if(timerList1.get(1).intersects(timerList1.get(3))) chantP1 += "A";
+					else if(timerList1.get(0).intersects(timerList1.get(3))) {
 						chantP1 += "A";
 						P1Crit = false;
 					}
 					else chantP1 = "";
-					grace = 300;
-					timerList.remove(3);
+					currentGrace1 = grace;
+					timerList1.remove(3);
 				}
 				else if (input.isKeyDown(Input.KEY_D)) {
-					if(timerList.get(1).intersects(timerList.get(3))) chantP1 += "D";
-					else if(timerList.get(0).intersects(timerList.get(3))) {
+					if(timerList1.get(1).intersects(timerList1.get(3))) chantP1 += "D";
+					else if(timerList1.get(0).intersects(timerList1.get(3))) {
 						chantP1 += "D";
 						P1Crit = false;
 					}
 					else chantP1 = "";
-					grace = 300;
-					timerList.remove(3);
+					currentGrace1 = grace;
+					timerList1.remove(3);
 				}
 				else if (input.isKeyDown(Input.KEY_SPACE)) {
 					checkSpell(chantP1, p1, p2);
@@ -183,7 +184,8 @@ public class LocalPvP extends BasicGameState implements GameState {
 				else if(input.isKeyDown(Input.KEY_0)) {
 					checkSpell("DDD", p1, p2);
 					checkSpell("DDD", p2, p1);
-					grace = 300;
+					currentGrace1 = grace;
+					currentGrace2 = grace;
 				}
 			}
 			
@@ -192,7 +194,7 @@ public class LocalPvP extends BasicGameState implements GameState {
 		} try {
 			
 			// Player 2 chanting
-			if(grace2 <= 0) {
+			if(currentGrace2 <= 0) {
 				if (input.isKeyDown(Input.KEY_UP)) {
 					if(timerList2.get(1).intersects(timerList2.get(3))) chantP2 += "W";
 					else if(timerList2.get(0).intersects(timerList2.get(3))) {
@@ -200,7 +202,7 @@ public class LocalPvP extends BasicGameState implements GameState {
 						P2Crit = false;
 					}
 					else chantP2 = "";
-					grace2 = 300;
+					currentGrace2 = grace;
 					timerList2.remove(3);
 				}
 				else if (input.isKeyDown(Input.KEY_DOWN)) {
@@ -210,7 +212,7 @@ public class LocalPvP extends BasicGameState implements GameState {
 						P2Crit = false;
 					}
 					else chantP2 = "";
-					grace2 = 300;
+					currentGrace2 = grace;
 					timerList2.remove(3);
 				}
 				else if (input.isKeyDown(Input.KEY_LEFT)) {
@@ -220,7 +222,7 @@ public class LocalPvP extends BasicGameState implements GameState {
 						P2Crit = false;
 					}
 					else chantP2 = "";
-					grace2 = 300;
+					currentGrace2 = grace;
 					timerList2.remove(3);
 				}
 				else if (input.isKeyDown(Input.KEY_RIGHT)) {
@@ -230,7 +232,7 @@ public class LocalPvP extends BasicGameState implements GameState {
 						P2Crit = false;
 					}
 					else chantP2 = "";
-					grace2 = 300;
+					currentGrace2 = grace;
 					timerList2.remove(3);
 				}
 				else if (input.isKeyDown(Input.KEY_ENTER)) {
@@ -243,7 +245,7 @@ public class LocalPvP extends BasicGameState implements GameState {
 		}
 		
 		int i = 0;
-		for(Shape s : timerList) {
+		for(Shape s : timerList1) {
 			if(i < 3) i++;
 			else{
 				s.setX(s.getX()-delta/p1.chantReaction);
@@ -257,46 +259,46 @@ public class LocalPvP extends BasicGameState implements GameState {
 			}
 		}
 		
-		if(timer >= tapInterval/p1.castSpeed) {
-			timerList.add(new Rectangle(500, 100, 3, 20));
-			timer = 0;
+		if(timer1 >= tapInterval1/p1.castSpeed) {
+			timerList1.add(new Rectangle(500, 100, 3, 20));
+			timer1 = 0;
 		}
-		else timer += 1+delta;
+		else timer1 += 1+delta;
 		
-		if(timer2 >= tapInterval2/p1.castSpeed) {
+		if(timer2 >= tapInterval2/p2.castSpeed) {
 			timerList2.add(new Rectangle(1200, 100, 3, 20));
 			timer2 = 0;
 		}
 		else timer2 += 1+delta;
 		
 		try {
-			if(timerList.get(3).intersects(timerList.get(2))) {
-				timerList.remove(3);
+			if(timerList1.get(3).intersects(timerList1.get(2))) {
+				timerList1.remove(3);
 				chantP1 = "";
-				grace = 300;
+				currentGrace1 = grace;
 				P1Crit = true;
 			}
 		} catch(IndexOutOfBoundsException e) {
 			
 		}
 		
-		if(grace > 0) {
-			grace -= delta;
+		if(currentGrace1 > 0) {
+			currentGrace1 -= delta;
 		}
 		
 		try {
 			if(timerList2.get(3).intersects(timerList2.get(2))) {
 				timerList2.remove(3);
 				chantP2 = "";
-				grace2 = 300;
+				currentGrace2 = grace;
 				P2Crit = true;
 			}
 		} catch(IndexOutOfBoundsException e) {
 			
 		}
 		
-		if(grace2 > 0) {
-			grace2 -= delta;
+		if(currentGrace2 > 0) {
+			currentGrace2 -= delta;
 		}
 		
 	}
@@ -314,19 +316,12 @@ public class LocalPvP extends BasicGameState implements GameState {
 		}
 		for(Spell spell : spells) {
 			if(spell.chant.equals(chant)) {
-				s = spell;
+				s = new Spell(spell);
 			}
 		}
 		try {
 			if(!s.equals(null)) {
 				s.cast(caster, opponent, oList, crit);
-				spells.remove(s);
-				if(s instanceof Fireball_Spell) {
-					spells.add(new Fireball_Spell());
-				}
-				if(s instanceof GiftOfLife_Spell) {
-					spells.add(new GiftOfLife_Spell());
-				}
 				if(caster.equals(p1)) p1LastSpell = s.name;
 				else p2LastSpell = s.name;
 			}
