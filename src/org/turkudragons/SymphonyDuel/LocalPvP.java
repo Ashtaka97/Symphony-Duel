@@ -312,15 +312,15 @@ public class LocalPvP extends BasicGameState implements GameState {
 			P2Crit = true;
 		}
 		for(Spell spell : spells) {
-			if(spell.chant.equals(chant)) {
-				s = new Spell(spell);
+			if(spell.getChant().equals(chant)) {
+				s = spell;
 			}
 		}
 		try {
 			if(!s.equals(null)) {
 				s.cast(caster, opponent, oList, crit);
-				if(caster.equals(p1)) p1LastSpell = s.name;
-				else p2LastSpell = s.name;
+				if(caster.equals(p1)) p1LastSpell = s.getName();
+				else p2LastSpell = s.getName();
 			}
 		} catch(NullPointerException e) {
 			
