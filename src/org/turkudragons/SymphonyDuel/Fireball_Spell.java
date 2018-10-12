@@ -10,7 +10,7 @@ public class Fireball_Spell implements Spell, Active, Visible, Cloneable {
 	private int power = 20; //Is the damage of an offensive spell, the amount of buff, the id of monster, the power of shield
 	private int count = 1; //how many times spell is cast aka. amount of summons
 	private boolean collidable = true;
-	private Shape hitbox = new Rectangle(0, 0, 8, 8);
+	private Shape hitbox;
 	private Type type = Type.ATTACK;
 	private Target target = Target.HOSTILE;
 	private Element element = Element.HEAT;
@@ -28,8 +28,7 @@ public class Fireball_Spell implements Spell, Active, Visible, Cloneable {
 		this.caster = caster;
 		this.opponent = opponent;
 		if(crit) power += power;
-		hitbox.setX(caster.x + 4);
-		hitbox.setY(caster.y + 10);
+		hitbox = new Rectangle(caster.x+4, caster.y+10, 8, 8);
 		try {
 			Fireball_Spell f = ((Fireball_Spell)this.clone());
 			oList.add(f);
