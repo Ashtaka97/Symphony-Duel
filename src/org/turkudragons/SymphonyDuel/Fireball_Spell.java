@@ -25,12 +25,12 @@ public class Fireball_Spell implements Spell, Active, Visible, Cloneable {
 
 	@Override
 	public void cast(Player caster, Player opponent, ArrayList<Object> oList, boolean crit) {
-		this.caster = caster;
-		this.opponent = opponent;
-		if(crit) power += power;
-		hitbox = new Rectangle(caster.x+4, caster.y+10, 8, 8);
 		try {
 			Fireball_Spell f = ((Fireball_Spell)this.clone());
+			if(crit) f.power += power;
+			f.caster = caster;
+			f.opponent = opponent;
+			f.hitbox = new Rectangle(caster.x+4, caster.y+10, 8, 8);
 			oList.add(f);
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
