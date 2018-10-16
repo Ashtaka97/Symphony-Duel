@@ -6,6 +6,52 @@ import org.newdawn.slick.geom.Shape;
 
 public interface Spell {
 	
+	public static void handleCollision(Spell s1, Spell s2){
+		if(s1.getType() == Type.ATTACK && s2.getType() == Type.ATTACK) {
+			if(compareElements(s1.getElement(), s2.getElement()) == 0) {
+				if(s1.getPower() > s2.getPower()) {
+					s1.setPower(s1.getPower() + s2.getPower());
+					s2.setDelete(true);
+				}
+				if(s1.getPower() < s2.getPower()) {
+					s2.setPower(s2.getPower() + s1.getPower());
+					s1.setDelete(true);
+				}
+				else {
+					s1.setDelete(true);
+					s2.setDelete(true);
+				}
+			}
+			if(compareElements(s1.getElement(), s2.getElement()) == 1) {
+				
+			}
+			if(compareElements(s1.getElement(), s2.getElement()) == -1) {
+				
+			}
+		}
+	}
+	
+	/**
+	 * Returns 1 if s1.element is superior, 0 if equal, -1 if inferior to s2.element.
+	 * @param s1
+	 * @param s2
+	 * @return
+	 */
+	public static int compareElements(Element e1, Element e2) {		
+		if(e1 == Element.HEAT && e2 == Element.WATER) return -1;
+		if(e2 == Element.HEAT && e1 == Element.WATER) return 1;
+		
+		if(e1 == Element.HEAT && e2 == Element.EARTH) return -1;
+		if(e2 == Element.HEAT && e1 == Element.EARTH) return 1;
+		
+		if(e1 == Element.HEAT && e2 == Element.NATURE) return 1;
+		if(e2 == Element.HEAT && e1 == Element.NATURE) return -1;
+		
+		
+		
+		return 0;
+	}
+
 	public void cast(Player caster, Player opponent, ArrayList<Object> oList, boolean crit);
 	
 	public boolean getDelete();
@@ -44,4 +90,7 @@ public interface Spell {
 
 	public void setName(String name);
 
+	public int getPower();
+	
+	public void setPower(int power);
 }

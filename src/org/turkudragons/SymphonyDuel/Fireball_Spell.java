@@ -42,8 +42,7 @@ public class Fireball_Spell implements Spell, Active, Visible, Cloneable {
 		for(int i = 2; i < oList.size(); i++) {
 			Spell s = (Spell)oList.get(i);
 			if(collidable && s.getHitbox().intersects(hitbox) && s.getCollidable() && !(s.equals(this))) {
-				this.delete = true;
-				s.setDelete(true);
+				Spell.handleCollision(this, s);
 			}
 		}
 		if(hitbox.intersects(opponent.hitbox)) {
@@ -150,6 +149,18 @@ public class Fireball_Spell implements Spell, Active, Visible, Cloneable {
 	@Override
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Override
+	public int getPower() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void setPower(int power) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

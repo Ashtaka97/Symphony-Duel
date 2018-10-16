@@ -113,4 +113,16 @@ public class GiftOfLife_Spell implements Spell{
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	@Override
+	public int getPower() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void setPower(int power) {
+		// TODO Auto-generated method stub
+		
+	}
 }

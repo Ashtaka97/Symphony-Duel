@@ -5,7 +5,7 @@ public enum Type {
 }
 
 enum Element {
-	HEAT, COLD, AIR, EARTH, RADIANT
+	HEAT, COLD, AIR, EARTH, WATER, NATURE, METAL, RADIANT, DARK
 }
 
 enum Target {
