@@ -39,20 +39,22 @@ public class Fireball_Spell implements Spell, Active, Visible, Cloneable {
 	
 	@Override
 	public void update(ArrayList<Object> oList, int delta) {
-		for(int i = 2; i < oList.size(); i++) {
-			Spell s = (Spell)oList.get(i);
-			if(collidable && s.getHitbox().intersects(hitbox) && s.getCollidable() && !(s.equals(this))) {
-				Spell.handleCollision(this, s);
+		if(!delete) {
+			for(int i = 2; i < oList.size(); i++) {
+				Spell s = (Spell)oList.get(i);
+				if(collidable && s.getHitbox().intersects(hitbox) && s.getCollidable() && !(s.equals(this))) {
+					Spell.handleCollision(this, s);
+				}
 			}
-		}
-		if(hitbox.intersects(opponent.hitbox)) {
-			opponent.hp -= power;
-			delete = true;
-		}
-		if(caster.hitbox.getX() < opponent.hitbox.getX()) {
-			hitbox.setX(hitbox.getX()+((speed*delta)/2));
-		} else {
-			hitbox.setX(hitbox.getX()-((speed*delta)/2));
+			if(hitbox.intersects(opponent.hitbox)) {
+				opponent.hp -= power;
+				delete = true;
+			}
+			if(caster.hitbox.getX() < opponent.hitbox.getX()) {
+				hitbox.setX(hitbox.getX()+((speed*delta)/2));
+			} else {
+				hitbox.setX(hitbox.getX()-((speed*delta)/2));
+			}
 		}
 	}
 	
@@ -153,14 +155,12 @@ public class Fireball_Spell implements Spell, Active, Visible, Cloneable {
 
 	@Override
 	public int getPower() {
-		// TODO Auto-generated method stub
-		return 0;
+		return power;
 	}
 
 	@Override
 	public void setPower(int power) {
-		// TODO Auto-generated method stub
-		
+		this.power = power;
 	}
 	
 }
