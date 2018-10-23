@@ -8,7 +8,7 @@ public interface Spell {
 	
 	public static void handleCollision(Spell s1, Spell s2){
 		if(s1.getType() == Type.ATTACK && s2.getType() == Type.ATTACK) {
-			if(compareElements(s1.getElement(), s2.getElement()) == 1) {
+			if(s1.getElement() == s2.getElement()) {
 				if(s1.getPower() > s2.getPower()) {
 					s1.setPower(s1.getPower() + s2.getPower());
 					s2.setDelete(true);
@@ -28,6 +28,9 @@ public interface Spell {
 			if(compareElements(s1.getElement(), s2.getElement()) == 0) {
 				
 			}
+			if(compareElements(s1.getElement(), s2.getElement()) == 1) {
+				
+			}
 		}
 	}
 	
@@ -37,7 +40,7 @@ public interface Spell {
 	 * @param s2
 	 * @return
 	 */
-	public static int compareElements(Element e1, Element e2) {		
+	public static int compareElements(Element e1, Element e2) {
 		if(e1 == Element.HEAT && e2 == Element.WATER) return -1;
 		if(e2 == Element.HEAT && e1 == Element.WATER) return 1;
 		
