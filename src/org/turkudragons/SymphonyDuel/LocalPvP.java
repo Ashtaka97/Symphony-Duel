@@ -44,81 +44,61 @@ public class LocalPvP extends BasicGameState implements GameState {
 	 * inputEnded, inputStarted, isAcceptingInput, setInput
 	 */
 
-	private int timer1;
-	int tapInterval1;
-	private int timer2;
-	int tapInterval2;
-	private int currentGrace1;
-	private int currentGrace2;
-	private final int grace = 300;
 	private Input input;
-	private Player p1;
-	private Player p2;
-	private String chantP1;
-	private String chantP2;
-	private boolean P1Crit;
-	private boolean P2Crit;
+	private static Player p1;
+	private static Player p2;
+	private Turn turn1;
+	private Turn turn2;
 	static ArrayList<Object> oList;
-	private ArrayList<Shape> timerList1;
-	private ArrayList<Shape> timerList2;
-	private ArrayList<Spell> spells;
-	private String p1LastSpell;
-	private String p2LastSpell;
+	private static ArrayList<Spell> spells;
+	private static int delta;
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		spells = new ArrayList<Spell>();
 		spells.add(new Fireball_Spell());
 		spells.add(new GiftOfLife_Spell());
-		p1LastSpell = "";
-		p2LastSpell = "";
-		timer1 = 0;
-		tapInterval1 = 750;
-		timer2 = 0;
-		tapInterval2 = 750;
-		currentGrace1 = 0;
-		currentGrace2 = 0;
 		input = gc.getInput();
-		chantP1 = "";
-		chantP2 = "";
-		P1Crit = true;
-		P2Crit = true;
 		p1 = new Player(200, 500);
 		p2 = new Player(1000, 500);
 		oList = new ArrayList<Object>();
 		oList.add(p1);
 		oList.add(p2);
-		timerList1 = new ArrayList<Shape>();
+		ArrayList<Shape> timerList1 = new ArrayList<Shape>();
 		timerList1.add(new Rectangle(100, 100, 50, 20));
 		timerList1.add(new Rectangle(115, 100, 6, 20));
 		timerList1.add(new Rectangle(85, 100, 15, 20));
-		timerList2 = new ArrayList<Shape>();
+		ArrayList<Shape> timerList2 = new ArrayList<Shape>();
 		timerList2.add(new Rectangle(800, 100, 50, 20));
 		timerList2.add(new Rectangle(815, 100, 6, 20));
 		timerList2.add(new Rectangle(785, 100, 15, 20));
+		ArrayList<Integer> inputList1 = new ArrayList<Integer>();
+		inputList1.add(Input.KEY_W);
+		inputList1.add(Input.KEY_A);
+		inputList1.add(Input.KEY_S);
+		inputList1.add(Input.KEY_D);
+		inputList1.add(Input.KEY_SPACE);
+		ArrayList<Integer> inputList2 = new ArrayList<Integer>();
+		inputList2.add(Input.KEY_UP);
+		inputList2.add(Input.KEY_LEFT);
+		inputList2.add(Input.KEY_DOWN);
+		inputList2.add(Input.KEY_RIGHT);
+		inputList2.add(Input.KEY_ENTER);
+		turn1 = new Turn(input, p1, p2, timerList1, inputList1);
+		turn2 = new Turn(input, p2, p1, timerList2, inputList2);
+		turn1.start();
+		turn2.start();
 	}
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-		g.drawString(timer1+"", 550, 100);
-		g.drawString(timer2+"", 600, 100);
 		for(Object v : oList) {
 			((Visible)v).display(g);
 		}
-		g.drawString(P1Crit + "", 200, 420);
-		g.drawString(P2Crit + "", 1000, 420);
-		g.drawString(chantP1, 200, 465);
-		g.drawString(chantP2, 1000, 465);
-		g.drawString("Hp: " + p1.hp, 200, 450);
-		g.drawString("Hp: " + p2.hp, 1000, 450);
-		g.drawString(p1LastSpell, 200, 435);
-		g.drawString(p2LastSpell, 1000, 435);
-		for(Shape s : timerList1) {
-			g.draw(s);
-		}
-		for(Shape s : timerList2) {
-			g.draw(s);
-		}
+		turn1.display(g);
+		turn2.display(g);
+		turn1.interrupt();
+		turn2.interrupt();
 	}
 
 	@Override
@@ -129,187 +109,17 @@ public class LocalPvP extends BasicGameState implements GameState {
 			if(((Active)oList.get(i)).getDelete()) oList.remove(i);
 		}
 		
-		try {
-			
-			// Player 1 chanting
-			if(currentGrace1 <= 0) {
-				if (input.isKeyDown(Input.KEY_W)) {
-					if(timerList1.get(1).intersects(timerList1.get(3))) chantP1 += "W";
-					else if(timerList1.get(0).intersects(timerList1.get(3))) {
-						chantP1 += "W";
-						P1Crit = false;
-					}
-					else chantP1 = "";
-					currentGrace1 = grace;
-					timerList1.remove(3);
-				}
-				else if (input.isKeyDown(Input.KEY_S)) {
-					if(timerList1.get(1).intersects(timerList1.get(3))) chantP1 += "S";
-					else if(timerList1.get(0).intersects(timerList1.get(3))) {
-						chantP1 += "S";
-						P1Crit = false;
-					}
-					else chantP1 = "";
-					currentGrace1 = grace;
-					timerList1.remove(3);
-				}
-				else if (input.isKeyDown(Input.KEY_A)) {
-					if(timerList1.get(1).intersects(timerList1.get(3))) chantP1 += "A";
-					else if(timerList1.get(0).intersects(timerList1.get(3))) {
-						chantP1 += "A";
-						P1Crit = false;
-					}
-					else chantP1 = "";
-					currentGrace1 = grace;
-					timerList1.remove(3);
-				}
-				else if (input.isKeyDown(Input.KEY_D)) {
-					if(timerList1.get(1).intersects(timerList1.get(3))) chantP1 += "D";
-					else if(timerList1.get(0).intersects(timerList1.get(3))) {
-						chantP1 += "D";
-						P1Crit = false;
-					}
-					else chantP1 = "";
-					currentGrace1 = grace;
-					timerList1.remove(3);
-				}
-				else if (input.isKeyDown(Input.KEY_SPACE)) {
-					checkSpell(chantP1, p1, p2);
-					chantP1 = "";
-				}
-				else if(input.isKeyDown(Input.KEY_0)) {
-					checkSpell("DDD", p1, p2);
-					checkSpell("DDD", p2, p1);
-					currentGrace1 = grace;
-					currentGrace2 = grace;
-				}
-			}
-			
-		} catch(IndexOutOfBoundsException e) {
-			
-		} try {
-			
-			// Player 2 chanting
-			if(currentGrace2 <= 0) {
-				if (input.isKeyDown(Input.KEY_UP)) {
-					if(timerList2.get(1).intersects(timerList2.get(3))) chantP2 += "W";
-					else if(timerList2.get(0).intersects(timerList2.get(3))) {
-						chantP2 += "W";
-						P2Crit = false;
-					}
-					else chantP2 = "";
-					currentGrace2 = grace;
-					timerList2.remove(3);
-				}
-				else if (input.isKeyDown(Input.KEY_DOWN)) {
-					if(timerList2.get(1).intersects(timerList2.get(3))) chantP2 += "S";
-					else if(timerList2.get(0).intersects(timerList2.get(3))) {
-						chantP2 += "S";
-						P2Crit = false;
-					}
-					else chantP2 = "";
-					currentGrace2 = grace;
-					timerList2.remove(3);
-				}
-				else if (input.isKeyDown(Input.KEY_LEFT)) {
-					if(timerList2.get(1).intersects(timerList2.get(3))) chantP2 += "A";
-					else if(timerList2.get(0).intersects(timerList2.get(3))) {
-						chantP2 += "A";
-						P2Crit = false;
-					}
-					else chantP2 = "";
-					currentGrace2 = grace;
-					timerList2.remove(3);
-				}
-				else if (input.isKeyDown(Input.KEY_RIGHT)) {
-					if(timerList2.get(1).intersects(timerList2.get(3))) chantP2 += "D";
-					else if(timerList2.get(0).intersects(timerList2.get(3))) {
-						chantP2 += "D";
-						P2Crit = false;
-					}
-					else chantP2 = "";
-					currentGrace2 = grace;
-					timerList2.remove(3);
-				}
-				else if (input.isKeyDown(Input.KEY_ENTER)) {
-					checkSpell(chantP2, p2, p1);
-					chantP2 = "";
-				}
-			}
-		} catch(IndexOutOfBoundsException e) {
-			
-		}
+		LocalPvP.delta = delta;
 		
-		int i = 0;
-		for(Shape s : timerList1) {
-			if(i < 3) i++;
-			else{
-				s.setX(s.getX()-delta/p1.chantReaction);
-			}
+		if(input.isKeyDown(Input.KEY_0) && turn1.currentGrace <= 0) {
+			LocalPvP.checkSpell("DDD", p1, p2, true);
+			LocalPvP.checkSpell("DDD", p2, p1, true);
+			turn1.currentGrace = 300;
 		}
-		int i2 = 0;
-		for(Shape s : timerList2) {
-			if(i2 < 3) i2++;
-			else{
-				s.setX(s.getX()-delta/p2.chantReaction);
-			}
-		}
-		
-		if(timer1 >= tapInterval1/p1.castSpeed) {
-			timerList1.add(new Rectangle(500, 100, 3, 20));
-			timer1 = 0;
-		}
-		else timer1 += 1+delta;
-		
-		if(timer2 >= tapInterval2/p2.castSpeed) {
-			timerList2.add(new Rectangle(1200, 100, 3, 20));
-			timer2 = 0;
-		}
-		else timer2 += 1+delta;
-		
-		try {
-			if(timerList1.get(3).intersects(timerList1.get(2))) {
-				timerList1.remove(3);
-				chantP1 = "";
-				currentGrace1 = grace;
-				P1Crit = true;
-			}
-		} catch(IndexOutOfBoundsException e) {
-			
-		}
-		
-		if(currentGrace1 > 0) {
-			currentGrace1 -= delta;
-		}
-		
-		try {
-			if(timerList2.get(3).intersects(timerList2.get(2))) {
-				timerList2.remove(3);
-				chantP2 = "";
-				currentGrace2 = grace;
-				P2Crit = true;
-			}
-		} catch(IndexOutOfBoundsException e) {
-			
-		}
-		
-		if(currentGrace2 > 0) {
-			currentGrace2 -= delta;
-		}
-		
 	}
 
-	private void checkSpell(String chant, Player caster, Player opponent) {
+	public synchronized static void checkSpell(String chant, Player caster, Player opponent, boolean crit) {
 		Spell s = null;
-		boolean crit;
-		if(caster.equals(p1)) {
-			crit = P1Crit;
-			P1Crit = true;
-		}
-		else {
-			crit = P2Crit;
-			P2Crit = true;
-		}
 		for(Spell spell : spells) {
 			if(spell.getChant().equals(chant)) {
 				s = spell;
@@ -318,12 +128,15 @@ public class LocalPvP extends BasicGameState implements GameState {
 		try {
 			if(!s.equals(null)) {
 				s.cast(caster, opponent, oList, crit);
-				if(caster.equals(p1)) p1LastSpell = s.getName();
-				else p2LastSpell = s.getName();
+				caster.pLastSpell = s.getName();
 			}
 		} catch(NullPointerException e) {
 			
 		}
+	}
+	
+	public synchronized static int getDelta() {
+		return delta;
 	}
 
 	@Override

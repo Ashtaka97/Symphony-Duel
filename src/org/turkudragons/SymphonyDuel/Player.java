@@ -16,6 +16,7 @@ public class Player implements Visible, Active{
 	protected int chantReaction;
 	protected int maxHp;
 	protected boolean delete = false;
+	protected String pLastSpell;
 	
 	public Player(int x, int y) {
 		hp = 100;
@@ -25,6 +26,7 @@ public class Player implements Visible, Active{
 		hitbox = new Rectangle(x, y, 16, 32);
 		castSpeed = 1;
 		chantReaction = 3;
+		pLastSpell = "";
 	}
 	
 	public void display(Graphics g) {
