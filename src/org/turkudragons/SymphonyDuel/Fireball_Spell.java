@@ -1,12 +1,14 @@
 package org.turkudragons.SymphonyDuel;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
-public class Fireball_Spell implements Spell, Active, Visible, Cloneable {
+public class Fireball_Spell implements Spell, Active, Visible, Cloneable, Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private int power = 20; //Is the damage of an offensive spell, the amount of buff, the id of monster, the power of shield
 	private int count = 1; //how many times spell is cast aka. amount of summons
 	private boolean collidable = true;

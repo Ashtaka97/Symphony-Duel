@@ -1,10 +1,12 @@
 package org.turkudragons.SymphonyDuel;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import org.newdawn.slick.geom.Shape;
 
-public class GiftOfLife_Spell implements Spell{
+public class GiftOfLife_Spell implements Spell, Serializable {
 	
+	private static final long serialVersionUID = 2L;
 	private int power = 50; //Is the damage of an offensive spell, the amount of buff, the id of monster, the power of shield
 	private int count = 0; //how many times spell is cast aka. amount of summons
 	private boolean collidable = false;
