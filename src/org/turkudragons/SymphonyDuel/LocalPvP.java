@@ -44,11 +44,9 @@ public class LocalPvP extends BasicGameState implements GameState {
 	 * inputEnded, inputStarted, isAcceptingInput, setInput
 	 */
 
-	private Input input;
+	public static Input input;
 	private static Player p1;
 	private static Player p2;
-	private Turn turn1;
-	private Turn turn2;
 	static ArrayList<Object> oList;
 	private static ArrayList<Spell> spells;
 	private static int delta;
@@ -59,11 +57,7 @@ public class LocalPvP extends BasicGameState implements GameState {
 		spells.add(new Fireball_Spell());
 		spells.add(new GiftOfLife_Spell());
 		input = gc.getInput();
-		p1 = new Player(200, 500);
-		p2 = new Player(1000, 500);
 		oList = new ArrayList<Object>();
-		oList.add(p1);
-		oList.add(p2);
 		ArrayList<Shape> timerList1 = new ArrayList<Shape>();
 		timerList1.add(new Rectangle(100, 100, 50, 20));
 		timerList1.add(new Rectangle(115, 100, 6, 20));
@@ -84,10 +78,10 @@ public class LocalPvP extends BasicGameState implements GameState {
 		inputList2.add(Input.KEY_DOWN);
 		inputList2.add(Input.KEY_RIGHT);
 		inputList2.add(Input.KEY_ENTER);
-		turn1 = new Turn(input, p1, p2, timerList1, inputList1);
-		turn2 = new Turn(input, p2, p1, timerList2, inputList2);
-		turn1.start();
-		turn2.start();
+		p1 = new Player(200, 500, timerList1, inputList1);
+		p2 = new Player(1000, 500, timerList2, inputList2);
+		oList.add(p1);
+		oList.add(p2);
 	}
 
 	@Override
@@ -95,15 +89,30 @@ public class LocalPvP extends BasicGameState implements GameState {
 		for(Object v : oList) {
 			((Visible)v).display(g);
 		}
-		turn1.display(g);
-		turn2.display(g);
-		turn1.interrupt();
-		turn2.interrupt();
+		g.drawString(p1.isCrit() + "", p1.hitbox.getX(), p1.hitbox.getY()-20);
+		g.drawString(p1.getChant(), p1.hitbox.getX(), p1.hitbox.getY()-65);
+		g.drawString("Hp: " + p1.hp, p1.hitbox.getX(), p1.hitbox.getY()-50);
+		g.drawString(p1.pLastSpell, p1.hitbox.getX(), p1.hitbox.getY()-35);
+		int x = p1.getTimerList().size();
+		try {
+			for(int i = 0; i < x; i++) {
+				g.draw(p1.getTimerList().get(i));
+			}
+		} catch(IndexOutOfBoundsException e) {}
+		g.drawString(p2.isCrit() + "", p2.hitbox.getX(), p2.hitbox.getY()-20);
+		g.drawString(p2.getChant(), p2.hitbox.getX(), p2.hitbox.getY()-65);
+		g.drawString("Hp: " + p2.hp, p2.hitbox.getX(), p2.hitbox.getY()-50);
+		g.drawString(p2.pLastSpell, p2.hitbox.getX(), p2.hitbox.getY()-35);
+		x = p2.getTimerList().size();
+		try {
+			for(int i = 0; i < x; i++) {
+				g.draw(p2.getTimerList().get(i));
+			}
+		} catch(IndexOutOfBoundsException e) {}
 	}
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
-		
 		for(int i = oList.size()-1; i >= 0 ; i--) {
 			((Active)oList.get(i)).update(oList, delta);
 			if(((Active)oList.get(i)).getDelete()) oList.remove(i);
@@ -111,15 +120,21 @@ public class LocalPvP extends BasicGameState implements GameState {
 		
 		LocalPvP.delta = delta;
 		
-		if(input.isKeyDown(Input.KEY_0) && turn1.currentGrace <= 0) {
-			LocalPvP.checkSpell("DDD", p1, p2, true);
-			LocalPvP.checkSpell("DDD", p2, p1, true);
-			turn1.currentGrace = 300;
+		if(input.isKeyDown(Input.KEY_0) && p1.getCurrentGrace() <= 0) {
+			LocalPvP.checkSpell("DDD", p1, true);
+			LocalPvP.checkSpell("DDD", p2, true);
+			p1.setCurrentGrace(300);
 		}
+		
+		p1.getTurn().start();
+		p2.getTurn().start();
 	}
 
-	public synchronized static void checkSpell(String chant, Player caster, Player opponent, boolean crit) {
+	public synchronized static void checkSpell(String chant, Player caster, boolean crit) {
 		Spell s = null;
+		Player opponent;
+		if(p1.equals(caster)) opponent = p2;
+		else opponent = p1;
 		for(Spell spell : spells) {
 			if(spell.getChant().equals(chant)) {
 				s = spell;
@@ -135,7 +150,7 @@ public class LocalPvP extends BasicGameState implements GameState {
 		}
 	}
 	
-	public synchronized static int getDelta() {
+	public static int getDelta() {
 		return delta;
 	}
 
