@@ -41,6 +41,7 @@ public class Player implements Visible, Active{
 		crit = true;
 		this.timerList = new ArrayList<Shape>(timerList);
 		this.inputList = new ArrayList<Integer>(inputList);
+		turn = new Turn(this);
 	}
 	
 	public void display(Graphics g) {

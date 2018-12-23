@@ -12,7 +12,7 @@ public class Main extends StateBasedGame {
 	}
 	
 	public static void main(String[] args) {
-
+		
 		AppGameContainer appgc;
 		
 		try {

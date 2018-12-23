@@ -1,6 +1,11 @@
 package org.turkudragons.SymphonyDuel;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -50,6 +55,8 @@ public class LocalPvP extends BasicGameState implements GameState {
 	static ArrayList<Object> oList;
 	private static ArrayList<Spell> spells;
 	private static int delta;
+	private ExecutorService turnManager;
+	private ArrayList<Callable> turns;
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
@@ -59,13 +66,13 @@ public class LocalPvP extends BasicGameState implements GameState {
 		input = gc.getInput();
 		oList = new ArrayList<Object>();
 		ArrayList<Shape> timerList1 = new ArrayList<Shape>();
-		timerList1.add(new Rectangle(100, 100, 50, 20));
-		timerList1.add(new Rectangle(115, 100, 6, 20));
-		timerList1.add(new Rectangle(85, 100, 15, 20));
+		timerList1.add(new Rectangle(75, 100, 75, 20));
+		timerList1.add(new Rectangle(110, 100, 6, 20));
+		timerList1.add(new Rectangle(60, 100, 15, 20));
 		ArrayList<Shape> timerList2 = new ArrayList<Shape>();
-		timerList2.add(new Rectangle(800, 100, 50, 20));
-		timerList2.add(new Rectangle(815, 100, 6, 20));
-		timerList2.add(new Rectangle(785, 100, 15, 20));
+		timerList2.add(new Rectangle(775, 100, 75, 20));
+		timerList2.add(new Rectangle(810, 100, 6, 20));
+		timerList2.add(new Rectangle(760, 100, 15, 20));
 		ArrayList<Integer> inputList1 = new ArrayList<Integer>();
 		inputList1.add(Input.KEY_W);
 		inputList1.add(Input.KEY_A);
@@ -82,13 +89,19 @@ public class LocalPvP extends BasicGameState implements GameState {
 		p2 = new Player(1000, 500, timerList2, inputList2);
 		oList.add(p1);
 		oList.add(p2);
+		turnManager = Executors.newCachedThreadPool();
+		turns = new ArrayList<Callable>();
+		turns.add(p1.getTurn());
+		turns.add(p2.getTurn());
 	}
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
+		
 		for(Object v : oList) {
 			((Visible)v).display(g);
 		}
+		
 		g.drawString(p1.isCrit() + "", p1.hitbox.getX(), p1.hitbox.getY()-20);
 		g.drawString(p1.getChant(), p1.hitbox.getX(), p1.hitbox.getY()-65);
 		g.drawString("Hp: " + p1.hp, p1.hitbox.getX(), p1.hitbox.getY()-50);
@@ -99,6 +112,7 @@ public class LocalPvP extends BasicGameState implements GameState {
 				g.draw(p1.getTimerList().get(i));
 			}
 		} catch(IndexOutOfBoundsException e) {}
+		
 		g.drawString(p2.isCrit() + "", p2.hitbox.getX(), p2.hitbox.getY()-20);
 		g.drawString(p2.getChant(), p2.hitbox.getX(), p2.hitbox.getY()-65);
 		g.drawString("Hp: " + p2.hp, p2.hitbox.getX(), p2.hitbox.getY()-50);
@@ -126,8 +140,11 @@ public class LocalPvP extends BasicGameState implements GameState {
 			p1.setCurrentGrace(300);
 		}
 		
-		p1.getTurn().start();
-		p2.getTurn().start();
+		try {
+			turnManager.invokeAll((Collection<? extends Callable<Integer>>) turns);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public synchronized static void checkSpell(String chant, Player caster, boolean crit) {

@@ -1,11 +1,12 @@
 package org.turkudragons.SymphonyDuel;
 
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
 
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
-public class Turn extends Thread {
+public class Turn implements Callable<Integer> {
 	
 	private Player caster;
 	
@@ -14,7 +15,7 @@ public class Turn extends Thread {
 	}
 	
 	@Override
-	public void run() {
+	public Integer call() {
 		int currentGrace = caster.getCurrentGrace();
 		int timer = caster.getTimer();
 		int tapInterval = caster.getTapInterval();
@@ -103,5 +104,6 @@ public class Turn extends Thread {
 		caster.setTimerList(timerList);
 		caster.setTimer(timer);
 		caster.setCrit(crit);
+		return 1;
 	}
 }
