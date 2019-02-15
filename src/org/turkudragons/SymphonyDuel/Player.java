@@ -30,7 +30,7 @@ public class Player implements Visible, Active{
 		maxHp = 100;
 		this.x = x;
 		this.y = y;
-		hitbox = new Rectangle(x, y, 16, 32);
+		hitbox = new Rectangle(x, y, 17, 33);
 		castSpeed = 1;
 		chantReaction = 3;
 		pLastSpell = "";
@@ -43,7 +43,7 @@ public class Player implements Visible, Active{
 		this.inputList = new ArrayList<Integer>(inputList);
 		turn = new Turn(this);
 	}
-	
+
 	public void display(Graphics g) {
 		g.draw(hitbox);
 	}
@@ -53,6 +53,14 @@ public class Player implements Visible, Active{
 			hp = maxHp;
 		}
 		turn = new Turn(this);
+	}
+	
+	public Shape getHitbox() {
+		return hitbox;
+	}
+
+	public void setHitbox(Shape hitbox) {
+		this.hitbox = hitbox;
 	}
 
 	public boolean getDelete() {

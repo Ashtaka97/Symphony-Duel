@@ -32,7 +32,9 @@ public class Fireball_Spell implements Spell, Active, Visible, Cloneable, Serial
 			if(crit) f.power += power;
 			f.caster = caster;
 			f.opponent = opponent;
-			f.hitbox = new Rectangle(caster.x+4, caster.y+10, 8, 8);
+			f.hitbox = new Rectangle(0, 0, 9, 9);
+			f.hitbox.setCenterX(caster.getHitbox().getCenterX());
+			f.hitbox.setCenterY(caster.getHitbox().getCenterY());
 			oList.add(f);
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
