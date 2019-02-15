@@ -6,7 +6,31 @@ import org.newdawn.slick.geom.Shape;
 public interface Spell {
 	
 	public static void handleCollision(Spell s1, Spell s2){
-		if(s1.getType() == Type.ATTACK && s2.getType() == Type.ATTACK) {
+		
+		int pmod1 = 1;
+		int pmod2 = 1;
+		
+		if(compareElements(s1.getElement(), s2.getElement()) == -1) {
+			pmod2 = 2;
+		}
+		if(compareElements(s1.getElement(), s2.getElement()) == 1) {
+			pmod1 = 2;
+		}
+		
+		if(s1.getPower()*pmod1 > s2.getPower()*pmod2) {
+			s1.setPower(s1.getPower() - s2.getPower());
+			s2.setDelete(true);
+		}
+		if(s1.getPower()*pmod1 < s2.getPower()*pmod2) {
+			s2.setPower(s2.getPower() - s1.getPower());
+			s1.setDelete(true);
+		}
+		if ((s1.getPower()*pmod1 == s2.getPower()*pmod2)) {
+			s1.setDelete(true);
+			s2.setDelete(true);
+		}
+		
+/*		if(s1.getType() == Type.ATTACK && s2.getType() == Type.ATTACK) {
 			if(s1.getElement() == s2.getElement()) {
 				if(s1.getPower() > s2.getPower()) {
 					s1.setPower(s1.getPower() + s2.getPower());
@@ -30,7 +54,7 @@ public interface Spell {
 			if(compareElements(s1.getElement(), s2.getElement()) == 1) {
 				
 			}
-		}
+		}*/
 	}
 	
 	/**

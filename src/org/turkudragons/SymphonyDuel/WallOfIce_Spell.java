@@ -16,7 +16,7 @@ public class WallOfIce_Spell implements Spell, Active, Visible, Cloneable, Seria
 	private Shape hitbox;
 	private Type type = Type.DEFENSE;
 	private Target target = Target.HOSTILE;
-	private Element element = Element.HEAT;
+	private Element element = Element.COLD;
 	private float speed = 0;
 	private String chant = "AAA";
 	private String name = "Wall Of Ice";
