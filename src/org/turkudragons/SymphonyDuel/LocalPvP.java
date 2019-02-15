@@ -63,6 +63,7 @@ public class LocalPvP extends BasicGameState implements GameState {
 		spells = new ArrayList<Spell>();
 		spells.add(new Fireball_Spell());
 		spells.add(new GiftOfLife_Spell());
+		spells.add(new WallOfIce_Spell());
 		input = gc.getInput();
 		oList = new ArrayList<Object>();
 		ArrayList<Shape> timerList1 = new ArrayList<Shape>();
