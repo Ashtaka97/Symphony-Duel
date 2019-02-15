@@ -55,6 +55,8 @@ public class LocalPvP extends BasicGameState implements GameState {
 	static ArrayList<Object> oList;
 	private static ArrayList<Spell> spells;
 	private static int delta;
+	private ExecutorService turnManager;
+	private ArrayList<Callable> turns;
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
@@ -87,6 +89,10 @@ public class LocalPvP extends BasicGameState implements GameState {
 		p2 = new Player(1000, 500, timerList2, inputList2);
 		oList.add(p1);
 		oList.add(p2);
+		turnManager = Executors.newCachedThreadPool();
+		turns = new ArrayList<Callable>();
+		turns.add(p1.getTurn());
+		turns.add(p2.getTurn());
 	}
 
 	@Override
@@ -134,13 +140,10 @@ public class LocalPvP extends BasicGameState implements GameState {
 			p1.setCurrentGrace(300);
 		}
 		
-		p1.getTurn().start();
-		p2.getTurn().start();
-		
-		while(true) {
-			if((p1.getTurn().getState() == Thread.State.TERMINATED) && (p2.getTurn().getState() == Thread.State.TERMINATED)) {
-				break;
-			}
+		try {
+			turnManager.invokeAll((Collection<? extends Callable<Integer>>) turns);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 	}
 

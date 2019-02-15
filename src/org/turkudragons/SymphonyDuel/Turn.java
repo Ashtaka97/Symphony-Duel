@@ -6,7 +6,7 @@ import java.util.concurrent.Callable;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
-public class Turn extends Thread {
+public class Turn implements Callable<Integer> {
 	
 	private Player caster;
 	
@@ -14,7 +14,8 @@ public class Turn extends Thread {
 		this.caster = caster;
 	}
 	
-	public void run() {
+	@Override
+	public Integer call() {
 		int currentGrace = caster.getCurrentGrace();
 		int timer = caster.getTimer();
 		int tapInterval = caster.getTapInterval();
@@ -35,7 +36,7 @@ public class Turn extends Thread {
 						caster.setChant("");
 					caster.setCurrentGrace(300);
 					timerList.remove(3);
-				} else if (LocalPvP.input.isKeyDown(inputList.get(2))) {
+				} else if (LocalPvP.input.isKeyDown(inputList.get(1))) {
 					if (timerList.get(1).intersects(timerList.get(3)))
 						caster.addChant("S");
 					else if (timerList.get(0).intersects(timerList.get(3))) {
@@ -45,7 +46,7 @@ public class Turn extends Thread {
 						caster.setChant("");
 					caster.setCurrentGrace(300);
 					timerList.remove(3);
-				} else if (LocalPvP.input.isKeyDown(inputList.get(1))) {
+				} else if (LocalPvP.input.isKeyDown(inputList.get(2))) {
 					if (timerList.get(1).intersects(timerList.get(3)))
 						caster.addChant("A");
 					else if (timerList.get(0).intersects(timerList.get(3))) {
@@ -103,5 +104,6 @@ public class Turn extends Thread {
 		caster.setTimerList(timerList);
 		caster.setTimer(timer);
 		caster.setCrit(crit);
+		return 1;
 	}
 }
