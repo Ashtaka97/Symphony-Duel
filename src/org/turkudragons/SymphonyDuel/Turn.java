@@ -36,7 +36,7 @@ public class Turn implements Callable<Integer> {
 						caster.setChant("");
 					caster.setCurrentGrace(300);
 					timerList.remove(3);
-				} else if (LocalPvP.input.isKeyDown(inputList.get(1))) {
+				} else if (LocalPvP.input.isKeyDown(inputList.get(2))) {
 					if (timerList.get(1).intersects(timerList.get(3)))
 						caster.addChant("S");
 					else if (timerList.get(0).intersects(timerList.get(3))) {
@@ -46,7 +46,7 @@ public class Turn implements Callable<Integer> {
 						caster.setChant("");
 					caster.setCurrentGrace(300);
 					timerList.remove(3);
-				} else if (LocalPvP.input.isKeyDown(inputList.get(2))) {
+				} else if (LocalPvP.input.isKeyDown(inputList.get(1))) {
 					if (timerList.get(1).intersects(timerList.get(3)))
 						caster.addChant("A");
 					else if (timerList.get(0).intersects(timerList.get(3))) {
