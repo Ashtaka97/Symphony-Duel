@@ -16,7 +16,7 @@ public class WallOfIce_Spell implements Spell, Active, Visible, Cloneable, Seria
 	private Shape hitbox;
 	private Type type = Type.DEFENSE;
 	private Target target = Target.HOSTILE;
-	private Element element = Element.COLD;
+	private Element element = Element.HEAT;
 	private float speed = 0;
 	private String chant = "AAA";
 	private String name = "Wall Of Ice";
@@ -33,7 +33,7 @@ public class WallOfIce_Spell implements Spell, Active, Visible, Cloneable, Seria
 			if(crit) woi.power += power;
 			woi.caster = caster;
 			woi.opponent = opponent;
-			woi.hitbox = new Rectangle(caster.x+4, caster.y+10, 8, 40);
+			woi.hitbox = new Rectangle(caster.x+24, caster.y-4, 8, 40);
 			oList.add(woi);
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
