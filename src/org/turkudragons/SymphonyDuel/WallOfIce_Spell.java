@@ -33,7 +33,13 @@ public class WallOfIce_Spell implements Spell, Active, Visible, Cloneable, Seria
 			if(crit) woi.power += power;
 			woi.caster = caster;
 			woi.opponent = opponent;
-			woi.hitbox = new Rectangle(caster.x+24, caster.y-4, 8, 40);
+			woi.hitbox = new Rectangle(0, 0, 8, 40);
+			woi.hitbox.setCenterY(caster.getHitbox().getCenterY());
+			if(caster.hitbox.getX() < opponent.hitbox.getX()) {
+				woi.hitbox.setCenterX(caster.getHitbox().getCenterX()+24);
+			} else {
+				woi.hitbox.setCenterX(caster.getHitbox().getCenterX()-24);
+			}
 			oList.add(woi);
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
